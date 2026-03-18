@@ -1,26 +1,73 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-navy: #0B3D52;
+  --color-azure: #1A6B8A;
+  --color-sky: #4BA3C3;
+  --color-sand: #F5EDD6;
+  --color-gold: #C9A84C;
+  --color-white: #FFFFFF;
+  --color-text: #1A1A1A;
+  --color-text-muted: #6B7280;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), sans-serif;
+  background: #ffffff;
+  color: var(--color-text);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-playfair), serif;
+}
+
+/* Amenity card hover */
+.amenity-card:hover {
+  background-color: var(--color-gold) !important;
+}
+.amenity-card:hover .amenity-icon,
+.amenity-card:hover .amenity-label {
+  color: #ffffff !important;
+}
+
+/* Footer social icon buttons */
+.footer-social:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+/* Contact form submit button */
+.contact-submit:hover {
+  background-color: var(--color-gold) !important;
+}
+
+/* Contact social icon buttons */
+.contact-social:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+/* Apartment card CTA button */
+.apt-cta {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+.apt-cta:hover {
+  background-color: var(--color-gold);
+  color: #ffffff;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
