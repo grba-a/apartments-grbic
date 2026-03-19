@@ -79,7 +79,7 @@ export default function Footer() {
   return (
     <>
       <footer style={{ backgroundColor: "var(--color-navy)" }} className="pt-16 pb-8 text-white">
-        <div className="mx-auto max-w-[1100px] px-6">
+        <div className="mx-auto max-w-[1240px] px-6">
 
           {/* Top 3-column grid */}
           <div className="grid grid-cols-1 gap-12 md:grid-cols-3">

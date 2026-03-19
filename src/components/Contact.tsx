@@ -132,7 +132,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="bg-white py-24">
-      <div className="mx-auto max-w-[1100px] px-6">
+      <div className="mx-auto max-w-[1240px] px-6">
 
         {/* Header */}
         <div className="flex flex-col items-center text-center">

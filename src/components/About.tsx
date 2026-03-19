@@ -11,7 +11,7 @@ const stats = [
 export default function About() {
   return (
     <section id="about" className="py-24" style={{ backgroundColor: "var(--color-sand)" }}>
-      <div className="mx-auto max-w-[1100px] px-6">
+      <div className="mx-auto max-w-[1240px] px-6">
         <div className="flex flex-col gap-16 md:flex-row md:items-center">
 
           {/* Left — image */}

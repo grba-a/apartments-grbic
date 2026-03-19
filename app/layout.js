@@ -2,6 +2,7 @@ import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
+import CookieBanner from "@/src/components/CookieBanner";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         {children}
         <Footer />
+        <CookieBanner />
       </body>
     </html>
   );

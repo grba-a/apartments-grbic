@@ -99,7 +99,7 @@ function Initials({ name }: { name: string }) {
 export default function Reviews() {
   return (
     <section id="reviews" className="py-24" style={{ backgroundColor: "var(--color-sand)" }}>
-      <div className="mx-auto max-w-[1100px] px-6">
+      <div className="mx-auto max-w-[1240px] px-6">
 
         {/* Section header */}
         <div className="flex flex-col items-center text-center">

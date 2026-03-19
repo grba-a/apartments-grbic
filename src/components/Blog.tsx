@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 type Post = {
   category: string;
@@ -53,14 +54,12 @@ function BlogCard({ post }: { post: Post }) {
     >
       {/* Image area */}
       <div className="relative aspect-[16/9] overflow-hidden bg-gray-200">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={post.imageSrc}
           alt={post.title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          onError={(e) => {
-            (e.currentTarget as HTMLImageElement).style.display = "none";
-          }}
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         {/* Category badge */}
         <span
@@ -141,7 +140,7 @@ function BlogCard({ post }: { post: Post }) {
 export default function Blog() {
   return (
     <section id="blog" className="bg-white py-24">
-      <div className="mx-auto max-w-[1100px] px-6">
+      <div className="mx-auto max-w-[1240px] px-6">
 
         {/* Header */}
         <div className="flex flex-col items-center text-center">

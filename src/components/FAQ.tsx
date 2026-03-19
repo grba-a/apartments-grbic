@@ -57,7 +57,7 @@ export default function FAQ() {
 
   return (
     <section id="faq" className="py-24" style={{ backgroundColor: "var(--color-sand)" }}>
-      <div className="mx-auto max-w-[1100px] px-6">
+      <div className="mx-auto max-w-[1240px] px-6">
 
         {/* Header */}
         <div className="flex flex-col items-center text-center">

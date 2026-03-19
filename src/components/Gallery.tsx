@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 
 type AspectRatio = "4/3" | "3/4" | "1/1";
 
@@ -17,8 +18,6 @@ const items: GalleryItem[] = [
   { src: "/assets/gallery4.jpg", alt: "Galerija 4", aspect: "4/3" },
   { src: "/assets/gallery5.jpg", alt: "Galerija 5", aspect: "3/4" },
   { src: "/assets/gallery6.jpg", alt: "Galerija 6", aspect: "1/1" },
-  { src: "/assets/gallery7.jpg", alt: "Galerija 7", aspect: "4/3" },
-  { src: "/assets/gallery8.jpg", alt: "Galerija 8", aspect: "3/4" },
 ];
 
 const aspectClasses: Record<AspectRatio, string> = {
@@ -61,7 +60,7 @@ export default function Gallery() {
   return (
     <>
       <section id="gallery" className="bg-white py-24">
-        <div className="mx-auto max-w-[1100px] px-6">
+        <div className="mx-auto max-w-[1240px] px-6">
 
           {/* Header */}
           <div className="flex flex-col items-center text-center">
@@ -115,13 +114,13 @@ export default function Gallery() {
                 className="group relative mb-4 cursor-pointer overflow-hidden rounded-xl bg-gray-200 break-inside-avoid"
                 onClick={() => setLightbox(i)}
               >
-                <div className={aspectClasses[item.aspect]}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                <div className={`relative ${aspectClasses[item.aspect]}`}>
+                  <Image
                     src={item.src}
                     alt={item.alt}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
 

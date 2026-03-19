@@ -34,6 +34,12 @@ h1, h2, h3, h4 {
   color: #ffffff !important;
 }
 
+/* Cookie banner reject button */
+.cookie-reject:hover {
+  background-color: var(--color-gold) !important;
+  color: white !important;
+}
+
 /* Footer social icon buttons */
 .footer-social:hover {
   border-color: var(--color-gold);
