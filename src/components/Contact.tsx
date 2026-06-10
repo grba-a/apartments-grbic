@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-// ── SVG icons ────────────────────────────────────────────────────────────────
+import { useLang } from "@/src/i18n/LangContext";
 
 function PhoneIcon() {
   return (
@@ -80,8 +79,6 @@ function CheckCircleIcon() {
   );
 }
 
-// ── Sub-components ────────────────────────────────────────────────────────────
-
 const inputClass =
   "w-full rounded-xl border border-gray-200 px-4 py-3 text-[15px] outline-none transition-all duration-200 focus:border-[var(--color-gold)] focus:ring-2 focus:ring-[var(--color-gold)]/20";
 const labelClass = "mb-1.5 block text-[13px] font-medium";
@@ -89,10 +86,7 @@ const labelClass = "mb-1.5 block text-[13px] font-medium";
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label
-        className={labelClass}
-        style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-navy)" }}
-      >
+      <label className={labelClass} style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}>
         {label}
       </label>
       {children}
@@ -101,29 +95,20 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 const socialLinks = [
-  { icon: <InstagramIcon />, href: "https://www.instagram.com/grbicapartments/", label: "Instagram" },
+  { icon: <InstagramIcon />, href: "https://www.instagram.com/apartments_grbic/", label: "Instagram" },
   { icon: <BookingIcon />, href: "https://www.booking.com/hotel/hr/apartmani-grbia.hr.html", label: "Booking" },
   { icon: <TripadvisorIcon />, href: "https://www.tripadvisor.com/Hotel_Review-g658382-d3831572", label: "Tripadvisor" },
   { icon: <MapsIcon />, href: "https://maps.app.goo.gl/79b8VsK1zgCx7ovY9", label: "Google Maps" },
 ];
 
-// ── Main component ────────────────────────────────────────────────────────────
-
 export default function Contact() {
-  const [fields, setFields] = useState({
-    name: "",
-    email: "",
-    checkin: "",
-    checkout: "",
-    guests: "",
-    apartment: "Svejedno",
-    message: "",
-  });
+  const { t } = useLang();
+  const [fields, setFields] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
 
-  const set = (key: keyof typeof fields) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => setFields((prev) => ({ ...prev, [key]: e.target.value }));
+  const set = (key: keyof typeof fields) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setFields((prev) => ({ ...prev, [key]: e.target.value }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,158 +119,89 @@ export default function Contact() {
     <section id="contact" className="bg-white py-24">
       <div className="mx-auto max-w-[1240px] px-6">
 
-        {/* Header */}
-        <div className="flex flex-col items-center text-center">
+        <div className="reveal flex flex-col items-center text-center">
           <span
             className="mb-3 text-[13px] uppercase tracking-widest"
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-gold)" }}
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-gold)" }}
           >
-            Kontakt
+            {t.contact.eyebrow}
           </span>
+          <span className="section-rule" />
           <h2
             className="mb-4 text-4xl font-normal leading-tight md:text-[48px]"
             style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
           >
-            Upit / Rezervacija
+            {t.contact.h2}
           </h2>
           <p
             className="text-base"
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
           >
-            Ispunite formu i javit ćemo Vam se u najkraćem mogućem roku.
+            {t.contact.subtitle}
           </p>
         </div>
 
-        {/* Two-column layout */}
-        <div className="mt-16 flex flex-col gap-12 md:flex-row md:items-start">
+        <div className="reveal mt-16 flex flex-col gap-12 md:flex-row md:items-start">
 
-          {/* ── Left — form ────────────────────────────────────────── */}
+          {/* Left — form */}
           <div className="flex-1 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
             {submitted ? (
               <div className="flex flex-col items-center justify-center gap-6 py-16 text-center">
                 <CheckCircleIcon />
-                <p
-                  className="text-[28px] font-normal"
-                  style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
-                >
-                  Hvala! Javit ćemo Vam se uskoro.
+                <p className="text-[28px] font-normal" style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}>
+                  {t.contact.successTitle}
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
-                {/* Name */}
-                <Field label="Ime i prezime">
+                <Field label={t.contact.nameLabel}>
                   <input
                     type="text"
                     required
                     value={fields.name}
                     onChange={set("name")}
-                    placeholder="Vaše ime i prezime"
+                    placeholder={t.contact.namePlaceholder}
                     className={inputClass}
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
+                    style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
                   />
                 </Field>
-
-                {/* Email */}
-                <Field label="Email">
+                <Field label={t.contact.emailLabel}>
                   <input
                     type="email"
                     required
                     value={fields.email}
                     onChange={set("email")}
-                    placeholder="vasa@email.com"
+                    placeholder={t.contact.emailPlaceholder}
                     className={inputClass}
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
+                    style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
                   />
                 </Field>
-
-                {/* Dates row */}
-                <div className="grid grid-cols-2 gap-4">
-                  <Field label="Dolazak">
-                    <input
-                      type="date"
-                      required
-                      value={fields.checkin}
-                      onChange={set("checkin")}
-                      className={inputClass}
-                      style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                    />
-                  </Field>
-                  <Field label="Odlazak">
-                    <input
-                      type="date"
-                      required
-                      value={fields.checkout}
-                      onChange={set("checkout")}
-                      className={inputClass}
-                      style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                    />
-                  </Field>
-                </div>
-
-                {/* Guests + apartment row */}
-                <div className="grid grid-cols-2 gap-4">
-                  <Field label="Broj osoba">
-                    <input
-                      type="number"
-                      required
-                      min={1}
-                      max={10}
-                      value={fields.guests}
-                      onChange={set("guests")}
-                      placeholder="2"
-                      className={inputClass}
-                      style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                    />
-                  </Field>
-                  <Field label="Preferirani apartman">
-                    <select
-                      value={fields.apartment}
-                      onChange={set("apartment")}
-                      className={inputClass}
-                      style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                    >
-                      {["Svejedno", "Apartman 1", "Apartman 2", "Apartman 3", "Apartman 4"].map(
-                        (o) => <option key={o} value={o}>{o}</option>
-                      )}
-                    </select>
-                  </Field>
-                </div>
-
-                {/* Message */}
-                <Field label="Poruka (nije obavezno)">
+                <Field label={t.contact.messageLabel}>
                   <textarea
-                    rows={4}
+                    rows={6}
+                    required
                     value={fields.message}
                     onChange={set("message")}
-                    placeholder="Eventualna pitanja ili posebni zahtjevi..."
+                    placeholder={t.contact.messagePlaceholder}
                     className={`${inputClass} resize-none`}
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
+                    style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
                   />
                 </Field>
-
-                {/* Submit */}
                 <button
                   type="submit"
-                  className="contact-submit mt-1 w-full rounded-full py-4 text-[16px] font-medium text-white transition-colors duration-200"
-                  style={{
-                    backgroundColor: "var(--color-navy)",
-                    fontFamily: "var(--font-inter), sans-serif",
-                  }}
+                  className="cursor-pointer mt-1 w-full rounded-full py-4 text-[11px] font-medium uppercase tracking-[0.2em] text-white transition-opacity duration-200 hover:opacity-85"
+                  style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
                 >
-                  Pošalji upit →
+                  {t.contact.submit}
                 </button>
               </form>
             )}
           </div>
 
-          {/* ── Right — contact info ───────────────────────────────── */}
+          {/* Right — contact info */}
           <div className="flex w-full flex-col md:w-[360px] md:shrink-0">
 
-            {/* Contact cards */}
             <div className="flex flex-col gap-4">
-
-              {/* Phone */}
               <a
                 href="tel:+385989600088"
                 className="flex items-center gap-4 rounded-2xl border bg-white p-6 transition-colors duration-200 hover:border-[var(--color-gold)]"
@@ -293,22 +209,15 @@ export default function Contact() {
               >
                 <span style={{ color: "var(--color-gold)" }}><PhoneIcon /></span>
                 <div>
-                  <p
-                    className="text-[12px] uppercase tracking-wide"
-                    style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
-                  >
-                    Telefon
+                  <p className="text-[12px] uppercase tracking-wide" style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}>
+                    {t.contact.phoneLabel}
                   </p>
-                  <p
-                    className="mt-0.5 text-[16px] font-medium"
-                    style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-navy)" }}
-                  >
+                  <p className="mt-0.5 text-[16px] font-medium" style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}>
                     +385 98 96 000 88
                   </p>
                 </div>
               </a>
 
-              {/* Email */}
               <a
                 href="mailto:apt.grbic.mlini@gmail.com"
                 className="flex items-center gap-4 rounded-2xl border bg-white p-6 transition-colors duration-200 hover:border-[var(--color-gold)]"
@@ -316,45 +225,31 @@ export default function Contact() {
               >
                 <span style={{ color: "var(--color-gold)" }}><EmailIcon /></span>
                 <div className="min-w-0">
-                  <p
-                    className="text-[12px] uppercase tracking-wide"
-                    style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
-                  >
-                    Email
+                  <p className="text-[12px] uppercase tracking-wide" style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}>
+                    {t.contact.contactEmailLabel}
                   </p>
-                  <p
-                    className="mt-0.5 break-all text-[16px] font-medium"
-                    style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-navy)" }}
-                  >
+                  <p className="mt-0.5 break-all text-[16px] font-medium" style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}>
                     apt.grbic.mlini@gmail.com
                   </p>
                 </div>
               </a>
 
-              {/* Address */}
               <div
-                className="flex items-center gap-4 rounded-2xl border bg-white p-6 transition-colors duration-200 hover:border-[var(--color-gold)]"
+                className="flex items-center gap-4 rounded-2xl border bg-white p-6"
                 style={{ borderColor: "#F3F4F6" }}
               >
                 <span style={{ color: "var(--color-gold)" }}><PinIcon /></span>
                 <div>
-                  <p
-                    className="text-[12px] uppercase tracking-wide"
-                    style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
-                  >
-                    Adresa
+                  <p className="text-[12px] uppercase tracking-wide" style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}>
+                    {t.contact.addressLabel}
                   </p>
-                  <p
-                    className="mt-0.5 text-[16px] font-medium"
-                    style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-navy)" }}
-                  >
-                    Mlini, Dubrovnik, Hrvatska
+                  <p className="mt-0.5 text-[16px] font-medium" style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}>
+                    {t.contact.addressValue}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Social links */}
             <div className="mt-6 flex gap-3">
               {socialLinks.map((s) => (
                 <a
@@ -370,16 +265,9 @@ export default function Contact() {
               ))}
             </div>
 
-            {/* Response time note */}
-            <div
-              className="mt-8 rounded-xl p-4"
-              style={{ backgroundColor: "#EFF6FF" }}
-            >
-              <p
-                className="text-[14px]"
-                style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-navy)" }}
-              >
-                ⚡ Odgovaramo unutar nekoliko sati
+            <div className="mt-8 rounded-xl p-4" style={{ backgroundColor: "#EFF6FF" }}>
+              <p className="text-[14px]" style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}>
+                {t.contact.responseTime}
               </p>
             </div>
 

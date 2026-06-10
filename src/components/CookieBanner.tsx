@@ -26,22 +26,21 @@ export default function CookieBanner() {
         <div className="max-w-[600px]">
           <p
             className="mb-1 text-[16px] font-medium"
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-navy)" }}
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}
           >
-            Kolačići (Cookies)
+            Cookies
           </p>
           <p
             className="text-[14px] leading-relaxed"
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text)" }}
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text)" }}
           >
-            Koristimo kolačiće kako bismo poboljšali Vaše iskustvo na stranici. Nastavkom
-            korištenja slažete se s našom{" "}
+            We use cookies to improve your experience on this site. By continuing to browse, you agree to our{" "}
             <a
               href="/pages/privacy"
               className="underline transition-opacity duration-200 hover:opacity-75"
               style={{ color: "var(--color-gold)" }}
             >
-              Politikom privatnosti
+              Privacy Policy
             </a>
             .
           </p>
@@ -53,24 +52,24 @@ export default function CookieBanner() {
             onClick={() => respond("rejected")}
             className="cookie-reject rounded-full px-6 py-2.5 text-[14px] font-medium transition-colors duration-200"
             style={{
-              fontFamily: "var(--font-inter), sans-serif",
+              fontFamily: "var(--font-montserrat), sans-serif",
               border: "1.5px solid var(--color-gold)",
               color: "var(--color-gold)",
               backgroundColor: "white",
             }}
           >
-            Odbij sve
+            Reject all
           </button>
           <button
             onClick={() => respond("accepted")}
             className="rounded-full px-6 py-2.5 text-[14px] font-medium text-white transition-colors duration-200 hover:bg-[#b8963e]"
             style={{
-              fontFamily: "var(--font-inter), sans-serif",
+              fontFamily: "var(--font-montserrat), sans-serif",
               backgroundColor: "var(--color-gold)",
               border: "1.5px solid var(--color-gold)",
             }}
           >
-            Prihvati sve
+            Accept all
           </button>
         </div>
 

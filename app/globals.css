@@ -16,7 +16,7 @@ html {
 }
 
 body {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   background: #ffffff;
   color: var(--color-text);
 }
@@ -46,11 +46,6 @@ h1, h2, h3, h4 {
   color: var(--color-gold);
 }
 
-/* Contact form submit button */
-.contact-submit:hover {
-  background-color: var(--color-gold) !important;
-}
-
 /* Contact social icon buttons */
 .contact-social:hover {
   border-color: var(--color-gold);
@@ -61,6 +56,10 @@ h1, h2, h3, h4 {
 .apt-cta {
   border-color: var(--color-gold);
   color: var(--color-gold);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
 }
 .apt-cta:hover {
   background-color: var(--color-gold);
@@ -76,4 +75,143 @@ h1, h2, h3, h4 {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ── Scroll-reveal ────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Brand CTA Buttons ────────────────────────────────────────── */
+/*
+  Shape: asymmetric tab — left side near-square (4px), right side rounded (28px).
+  The pointed-left / open-right form gives a directional feel that pairs
+  naturally with the → arrow and references the coastal-wave aesthetic.
+*/
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  padding: 13px 28px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: white;
+  background-color: var(--color-gold);
+  border: 1.5px solid var(--color-gold);
+  font-family: var(--font-montserrat), sans-serif;
+  transition: background-color 0.25s, border-color 0.25s;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-primary:hover {
+  background-color: #b8963e;
+  border-color: #b8963e;
+}
+.btn-primary .btn-arrow {
+  display: inline-block;
+  transition: transform 0.25s;
+  font-style: normal;
+}
+.btn-primary:hover .btn-arrow {
+  transform: translateX(5px);
+}
+
+.btn-navy {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  padding: 13px 28px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  background-color: transparent;
+  border: 1.5px solid var(--color-navy);
+  font-family: var(--font-montserrat), sans-serif;
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-navy:hover {
+  background-color: var(--color-navy);
+  color: white;
+}
+.btn-navy .btn-arrow {
+  display: inline-block;
+  transition: transform 0.25s;
+}
+.btn-navy:hover .btn-arrow {
+  transform: translateX(5px);
+}
+
+.btn-ghost-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  padding: 13px 28px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: white;
+  background-color: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  font-family: var(--font-montserrat), sans-serif;
+  transition: background-color 0.25s, border-color 0.25s;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-ghost-light:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+.btn-ghost-light .btn-arrow {
+  display: inline-block;
+  transition: transform 0.25s;
+}
+.btn-ghost-light:hover .btn-arrow {
+  transform: translateX(5px);
+}
+
+/* Larger variant for standalone CTAs on secondary pages */
+.btn-primary.btn-lg,
+.btn-navy.btn-lg,
+.btn-ghost-light.btn-lg {
+  padding: 16px 34px 16px 28px;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  gap: 12px;
+}
+
+/* ── Section heading decorative line ─────────────────────────── */
+.section-rule {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background-color: var(--color-gold);
+  margin: 0 auto 20px;
+  border-radius: 999px;
 }

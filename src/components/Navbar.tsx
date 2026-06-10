@@ -1,17 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
-const navLinks = [
-  { label: "Apartmani", href: "#apartments" },
-  { label: "O nama", href: "#about" },
-  { label: "Galerija", href: "#gallery" },
-  { label: "Lokacija", href: "#location" },
-  { label: "Blog", href: "#blog" },
-  { label: "Kontakt", href: "#contact" },
-];
+import { useLang } from "@/src/i18n/LangContext";
 
 export default function Navbar() {
+  const { t } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -23,57 +16,49 @@ export default function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  const textColor = scrolled
-    ? "text-[var(--color-navy)]"
-    : "text-white";
+  const textColor = scrolled ? "text-[var(--color-navy)]" : "text-white";
 
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-white/90 backdrop-blur-md border-b border-[var(--color-navy)]/10"
+            ? "bg-white/95 backdrop-blur-md border-b border-black/5 shadow-sm"
             : "bg-transparent"
         }`}
       >
         <nav className="mx-auto flex max-w-[1240px] items-center justify-between px-6 py-4 lg:px-8">
 
           {/* Logo */}
-          <a href="#top" className="flex items-baseline gap-1.5">
+          <a href="#top" className="flex items-baseline gap-1">
             <span
-              className={`text-lg leading-none transition-colors duration-300 ${textColor}`}
-              style={{ fontFamily: "var(--font-inter), sans-serif", fontWeight: 500 }}
+              className={`text-[15px] font-light uppercase tracking-[0.2em] leading-none transition-colors duration-300 ${textColor}`}
+              style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
             >
               Apartments
             </span>
             <span
-              className={`text-xl leading-none transition-colors duration-300 ${textColor}`}
-              style={{
-                fontFamily: "var(--font-playfair), serif",
-                fontStyle: "italic",
-                fontWeight: 600,
-              }}
+              className="text-[20px] leading-none italic font-semibold"
+              style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-gold)" }}
             >
               Grbić
             </span>
           </a>
 
           {/* Desktop nav links */}
-          <ul className="hidden md:flex items-center gap-7">
-            {navLinks.map(({ label, href }) => (
+          <ul className="hidden md:flex items-center gap-8">
+            {t.nav.links.map(({ label, href }) => (
               <li key={href}>
                 <a
                   href={href}
-                  className={`relative text-[14px] tracking-wider transition-colors duration-300 ${textColor}
-                    after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full
-                    after:origin-left after:scale-x-0 after:bg-current
+                  className={`relative text-[11px] font-medium uppercase tracking-[0.18em] transition-colors duration-300 ${textColor}
+                    after:absolute after:bottom-[-3px] after:left-0 after:h-px after:w-full
+                    after:origin-left after:scale-x-0 after:bg-[var(--color-gold)]
                     after:transition-transform after:duration-300 hover:after:scale-x-100`}
-                  style={{ fontFamily: "var(--font-inter), sans-serif" }}
+                  style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
                 >
                   {label}
                 </a>
@@ -81,88 +66,78 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* Desktop right side */}
+          {/* Desktop right */}
           <div className="hidden md:flex items-center gap-5">
-            <span
-              className={`text-[13px] cursor-pointer select-none transition-colors duration-300 ${textColor}`}
-              style={{ fontFamily: "var(--font-inter), sans-serif" }}
-            >
-              HR | EN
-            </span>
             <a
               href="#contact"
-              className="rounded-full px-5 py-2 text-sm font-medium text-white transition-opacity duration-200 hover:opacity-85"
-              style={{
-                backgroundColor: "var(--color-gold)",
-                fontFamily: "var(--font-inter), sans-serif",
-              }}
+              className="rounded-full px-6 py-2.5 text-[11px] font-medium uppercase tracking-[0.15em] text-white transition-opacity duration-200 hover:opacity-85"
+              style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
             >
-              Rezervacija
+              {t.nav.cta}
             </a>
           </div>
 
-          {/* Hamburger (mobile only) */}
+          {/* Hamburger (mobile) */}
           <button
-            className={`md:hidden p-2 -mr-2 transition-colors duration-300 ${textColor}`}
+            className={`md:hidden p-2 -mr-2 cursor-pointer transition-colors duration-300 ${textColor}`}
             onClick={() => setMenuOpen(true)}
-            aria-label="Otvori izbornik"
+            aria-label={t.nav.openMenu}
           >
-            <svg
-              width="24"
-              height="24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            >
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="18" x2="21" y2="18" />
+            <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+              <line x1="3" y1="6" x2="19" y2="6" />
+              <line x1="3" y1="11" x2="19" y2="11" />
+              <line x1="3" y1="16" x2="19" y2="16" />
             </svg>
           </button>
         </nav>
       </header>
 
-      {/* Mobile full-screen overlay */}
+      {/* Mobile full-screen menu */}
       <div
         className={`fixed inset-0 z-[100] flex flex-col transition-opacity duration-300 ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         style={{ backgroundColor: "var(--color-navy)" }}
       >
-        {/* Close button */}
-        <div className="flex justify-end p-5">
+        {/* Top bar */}
+        <div className="flex items-center justify-between px-6 py-5">
+          <a href="#top" onClick={() => setMenuOpen(false)} className="flex items-baseline gap-1">
+            <span
+              className="text-[14px] font-light uppercase tracking-[0.2em] leading-none text-white"
+              style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+            >
+              Apartments
+            </span>
+            <span
+              className="text-[18px] leading-none italic font-semibold"
+              style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-gold)" }}
+            >
+              Grbić
+            </span>
+          </a>
           <button
             onClick={() => setMenuOpen(false)}
-            className="p-2 text-white"
-            aria-label="Zatvori izbornik"
+            className="cursor-pointer p-2 text-white/70 hover:text-white transition-colors duration-200"
+            aria-label={t.nav.closeMenu}
           >
-            <svg
-              width="28"
-              height="28"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            >
-              <line x1="4" y1="4" x2="24" y2="24" />
-              <line x1="24" y1="4" x2="4" y2="24" />
+            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+              <line x1="4" y1="4" x2="20" y2="20" />
+              <line x1="20" y1="4" x2="4" y2="20" />
             </svg>
           </button>
         </div>
 
+        <div className="mx-6 h-px bg-white/10" />
+
         {/* Nav links */}
-        <ul className="flex flex-1 flex-col items-center justify-center gap-9">
-          {navLinks.map(({ label, href }) => (
+        <ul className="flex flex-1 flex-col items-center justify-center gap-7">
+          {t.nav.links.map(({ label, href }) => (
             <li key={href}>
               <a
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                className="text-white text-3xl tracking-wide transition-colors duration-200 hover:text-[var(--color-gold)]"
-                style={{
-                  fontFamily: "var(--font-playfair), serif",
-                  fontWeight: 500,
-                }}
+                className="text-white/80 text-[13px] font-medium uppercase tracking-[0.25em] transition-colors duration-200 hover:text-[var(--color-gold)]"
+                style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
               >
                 {label}
               </a>
@@ -170,18 +145,15 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Bottom CTA */}
-        <div className="flex justify-center pb-16">
+        {/* CTA */}
+        <div className="flex flex-col items-center gap-4 pb-14">
           <a
             href="#contact"
             onClick={() => setMenuOpen(false)}
-            className="rounded-full px-8 py-3 text-base font-medium text-white transition-opacity duration-200 hover:opacity-85"
-            style={{
-              backgroundColor: "var(--color-gold)",
-              fontFamily: "var(--font-inter), sans-serif",
-            }}
+            className="rounded-full px-10 py-3.5 text-[12px] font-medium uppercase tracking-[0.2em] text-white transition-opacity duration-200 hover:opacity-85"
+            style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
           >
-            Rezervacija
+            {t.nav.cta}
           </a>
         </div>
       </div>

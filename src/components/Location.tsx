@@ -1,27 +1,10 @@
 "use client";
 
-const highlights = [
-  "Dubrovnik — 10 minuta vožnje",
-  "Plaža — 5 minuta pješice",
-  "Uber do Dubrovnika — max 20€",
-  "Autobusna karta — 3€ u jednom smjeru",
-  "Restorani i šetnica — u neposrednoj blizini",
-];
+import { useLang } from "@/src/i18n/LangContext";
 
 function CheckIcon() {
   return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      style={{ color: "var(--color-gold)" }}
-      className="mt-0.5 shrink-0"
-    >
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--color-gold)" }} className="mt-0.5 shrink-0">
       <circle cx="10" cy="10" r="9" />
       <polyline points="6,10 9,13 14,7" />
     </svg>
@@ -55,46 +38,46 @@ function EmailIcon() {
 }
 
 export default function Location() {
+  const { t } = useLang();
+
   return (
     <section id="location" className="py-24" style={{ backgroundColor: "var(--color-sand)" }}>
       <div className="mx-auto max-w-[1240px] px-6">
 
-        {/* Header */}
-        <div className="flex flex-col items-center text-center">
+        <div className="reveal flex flex-col items-center text-center">
           <span
             className="mb-3 text-[13px] uppercase tracking-widest"
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-gold)" }}
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-gold)" }}
           >
-            Gdje smo
+            {t.location.eyebrow}
           </span>
+          <span className="section-rule" />
           <h2
             className="mb-4 text-4xl font-normal leading-tight md:text-[48px]"
             style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
           >
-            Lokacija
+            {t.location.h2}
           </h2>
           <p
             className="text-base"
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
           >
-            Mirna lokacija izvan gužve, ali blizu svega što trebate.
+            {t.location.subtitle}
           </p>
         </div>
 
-        {/* Two column layout */}
         <div className="mt-16 flex flex-col gap-12 md:flex-row md:items-start">
 
           {/* Left column */}
           <div className="flex flex-1 flex-col">
 
-            {/* Highlights list */}
             <ul className="flex flex-col gap-4">
-              {highlights.map((item) => (
+              {t.location.highlights.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <CheckIcon />
                   <span
                     className="text-[15px] leading-snug"
-                    style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
+                    style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
                   >
                     {item}
                   </span>
@@ -107,19 +90,27 @@ export default function Location() {
               <ul className="flex flex-col gap-4">
                 <li className="flex items-start gap-3">
                   <PinIcon />
-                  <span
-                    className="text-[15px]"
-                    style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
-                  >
-                    Mlini, Hrvatska
-                  </span>
+                  <div>
+                    <span
+                      className="block text-[15px] font-medium"
+                      style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}
+                    >
+                      Rivijera 10, 20207 Mlini
+                    </span>
+                    <span
+                      className="text-[13px]"
+                      style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+                    >
+                      {t.location.country}
+                    </span>
+                  </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <PhoneIcon />
                   <a
                     href="tel:+385989600088"
                     className="text-[15px] transition-colors duration-200 hover:text-[var(--color-gold)]"
-                    style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
+                    style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
                   >
                     +385 98 96 000 88
                   </a>
@@ -129,7 +120,7 @@ export default function Location() {
                   <a
                     href="mailto:apt.grbic.mlini@gmail.com"
                     className="break-all text-[15px] transition-colors duration-200 hover:text-[var(--color-gold)]"
-                    style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
+                    style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
                   >
                     apt.grbic.mlini@gmail.com
                   </a>
@@ -138,22 +129,25 @@ export default function Location() {
             </div>
 
             {/* Buttons */}
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="https://maps.app.goo.gl/79b8VsK1zgCx7ovY9"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full px-8 py-3 text-sm font-medium text-white transition-opacity duration-200 hover:opacity-85"
-                style={{ backgroundColor: "var(--color-navy)", fontFamily: "var(--font-inter), sans-serif" }}
+                className="btn-navy"
               >
-                Otvori Google Maps
+                {t.location.openMaps}
+                <span className="btn-arrow">→</span>
               </a>
               <a
-                href="#contact"
-                className="rounded-full border px-8 py-3 text-sm font-medium transition-colors duration-200 hover:bg-[var(--color-navy)] hover:text-white"
-                style={{ borderColor: "var(--color-navy)", color: "var(--color-navy)", fontFamily: "var(--font-inter), sans-serif" }}
+                href="https://wa.me/385989600088?text=Hello%2C%20I'm%20interested%20in%20apartment%20availability."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-[4px_28px_28px_4px] inline-flex items-center gap-2.5 px-7 py-[13px] text-[11px] font-medium uppercase tracking-[0.2em] text-white transition-opacity duration-200 hover:opacity-85"
+                style={{ backgroundColor: "#25D366", fontFamily: "var(--font-montserrat), sans-serif" }}
               >
-                Pošalji upit
+                {t.location.whatsapp}
+                <span className="inline-block transition-transform duration-200 hover:translate-x-1">→</span>
               </a>
             </div>
           </div>
@@ -162,14 +156,14 @@ export default function Location() {
           <div className="w-full overflow-hidden rounded-2xl shadow-lg md:w-[520px] md:shrink-0">
             <div className="h-[300px] md:h-[450px]">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2904.5!2d18.0!3d42.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x134b4f3c0e4a1234%3A0x1234567890abcdef!2sMlini%2C%20Croatia!5e0!3m2!1sen!2shr!4v1234567890"
+                src="https://maps.google.com/maps?q=42.623606,18.205885&z=16&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Lokacija Apartments Grbić — Mlini, Hrvatska"
+                title={t.location.mapTitle}
               />
             </div>
           </div>

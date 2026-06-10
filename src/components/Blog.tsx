@@ -15,32 +15,32 @@ type Post = {
 
 const posts: Post[] = [
   {
-    category: "Izleti",
-    title: "Najbolji jednodnevni izleti iz Dubrovnika",
+    category: "Day Trips",
+    title: "The Best Day Trips from Dubrovnik",
     description:
-      "Mljet, Korčula, Mostar, Kotor — otkrijte što sve možete posjetiti u jednom danu iz Dubrovnika.",
-    date: "Ožujak 2025",
-    readTime: "5 min čitanja",
+      "Mljet, Korčula, Mostar, Kotor — discover everything you can visit in a single day from Dubrovnik.",
+    date: "March 2025",
+    readTime: "5 min read",
     href: "/blog/izleti-dubrovnik",
     imageSrc: "/assets/blog1.jpg",
   },
   {
-    category: "Plaže",
-    title: "Najljepše plaže u Mlinima i okolici",
+    category: "Beaches",
+    title: "The Most Beautiful Beaches Near Mlini",
     description:
-      "Šljunčane uvale, kristalno more i mirne lokacije — vodič kroz najljepša mjesta za kupanje blizu Dubrovnika.",
-    date: "Veljača 2025",
-    readTime: "4 min čitanja",
+      "Pebble coves, crystal-clear water, and peaceful spots — a guide to the best swimming near Dubrovnik.",
+    date: "February 2025",
+    readTime: "4 min read",
     href: "/blog/plaze-mlini",
     imageSrc: "/assets/blog2.jpg",
   },
   {
-    category: "Praktični savjeti",
-    title: "Kako doći do Apartments Grbić — parking i transfer savjeti",
+    category: "Travel Tips",
+    title: "Getting to Apartments Grbić — Parking & Transfer Guide",
     description:
-      "Sve što trebate znati o dolasku autom, transferu s aerodroma i parkingu u Mlinima.",
-    date: "Siječanj 2025",
-    readTime: "3 min čitanja",
+      "Everything you need to know about arriving by car, airport transfer, and parking in Mlini.",
+    date: "January 2025",
+    readTime: "3 min read",
     href: "/blog/dolazak-parking",
     imageSrc: "/assets/blog3.jpg",
   },
@@ -66,7 +66,7 @@ function BlogCard({ post }: { post: Post }) {
           className="absolute left-3 top-3 rounded-full px-3 py-1 text-[11px] font-medium text-white"
           style={{
             backgroundColor: "var(--color-gold)",
-            fontFamily: "var(--font-inter), sans-serif",
+            fontFamily: "var(--font-montserrat), sans-serif",
           }}
         >
           {post.category}
@@ -79,7 +79,7 @@ function BlogCard({ post }: { post: Post }) {
         <span
           className="text-[12px] uppercase tracking-wider"
           style={{
-            fontFamily: "var(--font-inter), sans-serif",
+            fontFamily: "var(--font-montserrat), sans-serif",
             color: "var(--color-text-muted)",
           }}
         >
@@ -101,7 +101,7 @@ function BlogCard({ post }: { post: Post }) {
         <p
           className="mt-3 line-clamp-3 text-[14px] leading-relaxed"
           style={{
-            fontFamily: "var(--font-inter), sans-serif",
+            fontFamily: "var(--font-montserrat), sans-serif",
             color: "var(--color-text-muted)",
           }}
         >
@@ -116,20 +116,21 @@ function BlogCard({ post }: { post: Post }) {
           <span
             className="text-[12px]"
             style={{
-              fontFamily: "var(--font-inter), sans-serif",
+              fontFamily: "var(--font-montserrat), sans-serif",
               color: "var(--color-text-muted)",
             }}
           >
             {post.date}
           </span>
           <span
-            className="text-[13px] transition-all duration-200 group-hover:underline"
+            className="flex items-center gap-1.5 text-[13px] transition-all duration-200"
             style={{
-              fontFamily: "var(--font-inter), sans-serif",
+              fontFamily: "var(--font-montserrat), sans-serif",
               color: "var(--color-gold)",
             }}
           >
-            Pročitaj →
+            Read more
+            <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
           </span>
         </div>
       </div>
@@ -143,24 +144,25 @@ export default function Blog() {
       <div className="mx-auto max-w-[1240px] px-6">
 
         {/* Header */}
-        <div className="flex flex-col items-center text-center">
+        <div className="reveal flex flex-col items-center text-center">
           <span
             className="mb-3 text-[13px] uppercase tracking-widest"
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-gold)" }}
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-gold)" }}
           >
             Blog
           </span>
+          <span className="section-rule" />
           <h2
             className="mb-4 text-4xl font-normal leading-tight md:text-[48px]"
             style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
           >
-            Vodiči i savjeti
+            Guides & Tips
           </h2>
           <p
             className="text-base"
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
           >
-            Kratki vodiči i ideje za izlete oko Dubrovnika.
+            Short guides and ideas for exploring Dubrovnik and beyond.
           </p>
         </div>
 
@@ -174,9 +176,9 @@ export default function Blog() {
         {/* Bottom CTA */}
         <p
           className="mt-12 text-center text-base italic"
-          style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
+          style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
         >
-          Više savjeta i vodiča uskoro
+          More guides and tips coming soon
         </p>
 
       </div>

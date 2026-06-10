@@ -1,19 +1,22 @@
-import { Playfair_Display, Inter } from "next/font/google";
+import { Playfair_Display, Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
 import CookieBanner from "@/src/components/CookieBanner";
+import RevealObserver from "@/src/components/RevealObserver";
+import WhatsAppButton from "@/src/components/WhatsAppButton";
+import { LangProvider } from "@/src/i18n/LangContext";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500", "600"],
 });
 
 export const metadata = {
@@ -24,12 +27,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="hr">
-      <body className={`${playfair.variable} ${inter.variable} antialiased`}>
-        <Navbar />
-        {children}
-        <Footer />
-        <CookieBanner />
+    <html lang="en">
+      <body className={`${playfair.variable} ${montserrat.variable} antialiased`}>
+        <LangProvider>
+          <Navbar />
+          {children}
+          <Footer />
+          <CookieBanner />
+          <WhatsAppButton />
+          <RevealObserver />
+        </LangProvider>
       </body>
     </html>
   );

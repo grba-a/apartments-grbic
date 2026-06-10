@@ -1,66 +1,100 @@
 "use client";
 
-type Platform = "Google" | "Booking" | "Tripadvisor";
+import { useId } from "react";
+import { useLang } from "@/src/i18n/LangContext";
+
+type Platform = "Google" | "Booking" | "Tripadvisor" | "Agoda";
 
 type Review = {
   score: number;
   text: string;
   name: string;
+  location: string;
   platform: Platform;
+  date: string;
 };
 
 const platformStats = [
-  { name: "Booking", score: 8.8, outOf: 10, stars: 4.5 },
-  { name: "Google", score: 4.3, outOf: 5, stars: 4.3 },
-  { name: "Tripadvisor", score: 4.6, outOf: 5, stars: 4.6 },
+  { name: "Booking.com", score: 8.7, outOf: 10, stars: 4.4, reviews: 132 },
+  { name: "Google",      score: 4.3, outOf: 5,  stars: 4.3, reviews: 27  },
+  { name: "Agoda",       score: 4.5, outOf: 5,  stars: 4.5, reviews: 131 },
 ];
 
 const reviews: Review[] = [
   {
-    score: 5.0,
-    text: "Čisto, mirno i odlična lokacija. Sve jednostavno i bez stresa.",
-    name: "Jack",
-    platform: "Google",
-  },
-  {
-    score: 4.8,
-    text: "Balkon i pogled na more su top. Sve uredno i domaćin brz na odgovoru.",
-    name: "Ana",
+    score: 10,
+    text: "This is a gem — excellent value for money. Super comfy bed and a beautiful view of the bay. Ana was super helpful, she even offered to drive us back to the airport when our taxi was delayed.",
+    name: "Gwendoline",
+    location: "Francuska",
     platform: "Booking",
+    date: "Rujan 2023",
   },
   {
-    score: 4.6,
-    text: "Parking je stvarno plus. Super baza za Dubrovnik i izlete.",
-    name: "Karlo",
-    platform: "Tripadvisor",
+    score: 10,
+    text: "The apartment was spotlessly clean, comfortable and had everything we needed. 5 minutes to the beach, the steps are great exercise! Ana was a wonderful host — very friendly and helpful.",
+    name: "Francine",
+    location: "UK",
+    platform: "Booking",
+    date: "Svibanj 2024",
+  },
+  {
+    score: 10,
+    text: "How easy it is to get to Dubrovnik and Cavtat by water taxi. In my eyes this is a much better location than staying in Dubrovnik itself. Highly recommend.",
+    name: "Lewis",
+    location: "UK",
+    platform: "Booking",
+    date: "Kolovoz 2025",
+  },
+  {
+    score: 10,
+    text: "The apartment is excellent. Beautiful sea view, parking on the property, Ana is very friendly. We will definitely be back — there was no more availability to extend our stay!",
+    name: "Alana",
+    location: "Brazil",
+    platform: "Booking",
+    date: "Srpanj 2024",
+  },
+  {
+    score: 10,
+    text: "We loved Mlini — an ideal base for bus and water taxi to Dubrovnik and Cavtat. We had a fabulous holiday and would highly recommend Apartments Grbić.",
+    name: "Margaret",
+    location: "UK",
+    platform: "Booking",
+    date: "Kolovoz 2025",
+  },
+  {
+    score: 9,
+    text: "It's challenging to climb the stairs, but for that you receive a breathtaking view and complete silence — something you simply won't find in apartments next to the promenade.",
+    name: "Elizaveta",
+    location: "Rusija",
+    platform: "Booking",
+    date: "Srpanj 2023",
   },
 ];
 
 const platformColors: Record<Platform, string> = {
-  Google: "#4285F4",
-  Booking: "#003580",
+  Google:      "#4285F4",
+  Booking:     "#003580",
   Tripadvisor: "#34E0A1",
+  Agoda:       "#D32F2F",
 };
 
-function StarRow({ score, outOf = 5, size = 16 }: { score: number; outOf?: number; size?: number }) {
-  // Normalise to 0–5
+function StarRow({ score, outOf = 5, size = 15 }: { score: number; outOf?: number; size?: number }) {
   const normalised = outOf === 10 ? (score / 10) * 5 : score;
+  const uid = useId().replace(/:/g, "");
   return (
     <div className="flex items-center gap-0.5">
       {[1, 2, 3, 4, 5].map((n) => {
         const fill = normalised >= n ? 1 : normalised >= n - 0.5 ? 0.5 : 0;
+        const gradId = `star-${uid}-${n}`;
         return (
           <svg key={n} width={size} height={size} viewBox="0 0 20 20">
             <defs>
-              <linearGradient id={`star-${n}-${size}`}>
+              <linearGradient id={gradId}>
                 <stop offset={`${fill * 100}%`} stopColor="#C9A84C" />
                 <stop offset={`${fill * 100}%`} stopColor="#D1D5DB" />
               </linearGradient>
             </defs>
-            <path
-              d="M10 1l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.3l-5.2 2.7 1-5.8L1.6 7.1l5.8-.8z"
-              fill={`url(#star-${n}-${size})`}
-            />
+            <path d="M10 1l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.3l-5.2 2.7 1-5.8L1.6 7.1l5.8-.8z" fill={`url(#${gradId})`} />
           </svg>
         );
       })}
@@ -71,11 +105,8 @@ function StarRow({ score, outOf = 5, size = 16 }: { score: number; outOf?: numbe
 function PlatformBadge({ platform }: { platform: Platform }) {
   return (
     <span
-      className="rounded-full px-2.5 py-0.5 text-[11px] font-medium text-white"
-      style={{
-        backgroundColor: platformColors[platform],
-        fontFamily: "var(--font-inter), sans-serif",
-      }}
+      className="rounded-full px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white"
+      style={{ backgroundColor: platformColors[platform], fontFamily: "var(--font-montserrat), sans-serif" }}
     >
       {platform}
     </span>
@@ -85,11 +116,8 @@ function PlatformBadge({ platform }: { platform: Platform }) {
 function Initials({ name }: { name: string }) {
   return (
     <div
-      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-medium text-white"
-      style={{
-        backgroundColor: "var(--color-gold)",
-        fontFamily: "var(--font-inter), sans-serif",
-      }}
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[13px] font-semibold text-white"
+      style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
     >
       {name.charAt(0).toUpperCase()}
     </div>
@@ -97,107 +125,116 @@ function Initials({ name }: { name: string }) {
 }
 
 export default function Reviews() {
+  const { t } = useLang();
+
   return (
     <section id="reviews" className="py-24" style={{ backgroundColor: "var(--color-sand)" }}>
       <div className="mx-auto max-w-[1240px] px-6">
 
-        {/* Section header */}
-        <div className="flex flex-col items-center text-center">
+        <div className="reveal flex flex-col items-center text-center">
           <span
-            className="mb-3 text-[13px] uppercase tracking-widest"
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-gold)" }}
+            className="mb-3 text-[11px] uppercase tracking-[0.2em]"
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-gold)" }}
           >
-            Recenzije
+            {t.reviews.eyebrow}
           </span>
+          <span className="section-rule" />
           <h2
             className="mb-4 text-4xl font-normal leading-tight md:text-[48px]"
             style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
           >
-            Što kažu naši gosti
+            {t.reviews.h2}
           </h2>
           <p
-            className="text-base"
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
+            className="max-w-[480px] text-[15px] leading-relaxed"
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
           >
-            Iskustva gostiju koji su boravili u Apartments Grbić.
+            {t.reviews.subtitle}
           </p>
         </div>
 
-        {/* Platform stats bar */}
-        <div className="mt-12 mb-16 flex flex-wrap items-start justify-center gap-12">
+        {/* Platform stats */}
+        <div className="reveal reveal-delay-1 mt-14 mb-16 grid grid-cols-3 gap-4 md:gap-8 max-w-[680px] mx-auto">
           {platformStats.map((p) => (
-            <div key={p.name} className="flex flex-col items-center gap-2">
+            <div
+              key={p.name}
+              className="flex flex-col items-center gap-2 rounded-2xl bg-white p-5 shadow-sm"
+            >
               <span
-                className="text-[13px] uppercase tracking-widest"
-                style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
+                className="text-[10px] uppercase tracking-[0.15em] text-center"
+                style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
               >
                 {p.name}
               </span>
               <span
-                className="text-[48px] font-normal leading-none"
+                className="text-[40px] font-normal leading-none"
                 style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
               >
                 {p.score}
               </span>
-              <StarRow score={p.stars} outOf={5} size={18} />
+              <StarRow score={p.stars} outOf={5} size={14} />
               <span
-                className="text-[12px]"
-                style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
+                className="text-[10px]"
+                style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
               >
-                od {p.outOf}
+                {p.reviews} {t.reviews.reviewsLabel}
               </span>
             </div>
           ))}
         </div>
 
         {/* Reviews grid */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {reviews.map((r) => (
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+          {reviews.map((r, idx) => (
             <div
               key={r.name}
-              className="group relative flex flex-col overflow-hidden rounded-2xl bg-white p-8 shadow-sm transition-shadow duration-300 hover:shadow-lg"
+              className={`reveal group relative flex flex-col overflow-hidden rounded-2xl bg-white p-7 shadow-sm transition-shadow duration-300 hover:shadow-md ${idx >= 3 ? "reveal-delay-2" : "reveal-delay-1"}`}
             >
-              {/* Decorative quote mark */}
               <span
-                className="pointer-events-none absolute -top-2 left-5 select-none text-[80px] leading-none opacity-20"
-                style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-gold)" }}
+                className="pointer-events-none absolute -top-1 left-5 select-none text-[72px] leading-none"
+                style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-gold)", opacity: 0.12 }}
                 aria-hidden="true"
               >
                 "
               </span>
 
-              {/* Stars + score */}
-              <div className="relative flex items-center justify-between">
-                <StarRow score={r.score} size={16} />
+              <div className="relative mb-4 flex items-center justify-between">
+                <StarRow score={r.score} size={15} />
                 <span
-                  className="text-[13px] font-medium"
-                  style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-navy)" }}
+                  className="text-[12px] font-medium"
+                  style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
                 >
-                  {r.score.toFixed(1)}
+                  {t.reviews.dates[r.date] ?? r.date}
                 </span>
               </div>
 
-              {/* Quote text */}
               <p
-                className="relative mt-4 flex-1 text-base italic leading-relaxed"
-                style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
+                className="relative flex-1 text-[14px] leading-[1.75] italic"
+                style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
               >
-                {r.text}
+                "{r.text}"
               </p>
 
-              {/* Reviewer row */}
               <div
-                className="mt-6 flex items-center gap-3 border-t pt-4"
+                className="mt-5 flex items-center gap-3 border-t pt-4"
                 style={{ borderColor: "#F3F4F6" }}
               >
                 <Initials name={r.name} />
-                <div className="flex flex-1 flex-col gap-1">
-                  <span
-                    className="text-[14px] font-medium"
-                    style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-navy)" }}
-                  >
-                    {r.name}
-                  </span>
+                <div className="flex flex-1 flex-col gap-1.5">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="text-[13px] font-semibold"
+                      style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}
+                    >
+                      {r.name}
+                    </span>
+                    <span
+                      className="text-[11px]"
+                      style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+                    >
+                      · {t.reviews.locations[r.location] ?? r.location}
+                    </span>
+                  </div>
                   <PlatformBadge platform={r.platform} />
                 </div>
               </div>
@@ -206,28 +243,26 @@ export default function Reviews() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-16 flex flex-wrap items-center justify-center gap-2 text-base">
-          <span
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-text-muted)" }}
-          >
-            Pročitajte sve recenzije na
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-2 text-[14px]">
+          <span style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}>
+            {t.reviews.readAllOn}
           </span>
           <a
             href="https://www.booking.com/hotel/hr/apartmani-grbia.hr.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline-offset-2 hover:underline"
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-gold)" }}
+            className="font-medium transition-colors duration-200 hover:underline"
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-gold)" }}
           >
             Booking.com
           </a>
-          <span style={{ color: "var(--color-text-muted)" }}>i</span>
+          <span style={{ color: "var(--color-text-muted)" }}>{t.reviews.and}</span>
           <a
             href="https://share.google/P6ZK6srMHdU72N4fk"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline-offset-2 hover:underline"
-            style={{ fontFamily: "var(--font-inter), sans-serif", color: "var(--color-gold)" }}
+            className="font-medium transition-colors duration-200 hover:underline"
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-gold)" }}
           >
             Google
           </a>
