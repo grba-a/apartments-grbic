@@ -36,7 +36,7 @@ export default function CookieBanner() {
           >
             We use cookies to improve your experience on this site. By continuing to browse, you agree to our{" "}
             <a
-              href="/pages/privacy"
+              href="/privacy"
               className="underline transition-opacity duration-200 hover:opacity-75"
               style={{ color: "var(--color-gold)" }}
             >

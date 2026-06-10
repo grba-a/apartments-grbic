@@ -215,8 +215,8 @@ export default function Footer() {
             </span>
             <div className="flex gap-4">
               {[
-                { label: "Privacy", href: "/pages/privacy" },
-                { label: "Terms", href: "/pages/terms" },
+                { label: "Privacy", href: "/privacy" },
+                { label: "Terms", href: "/terms" },
               ].map(({ label, href }) => (
                 <a
                   key={href}

@@ -21,7 +21,7 @@ const posts: Post[] = [
       "Mljet, Korčula, Mostar, Kotor — discover everything you can visit in a single day from Dubrovnik.",
     date: "March 2025",
     readTime: "5 min read",
-    href: "/blog/izleti-dubrovnik",
+    href: "/blog/day-trips-dubrovnik",
     imageSrc: "/assets/blog1.jpg",
   },
   {
@@ -31,7 +31,7 @@ const posts: Post[] = [
       "Pebble coves, crystal-clear water, and peaceful spots — a guide to the best swimming near Dubrovnik.",
     date: "February 2025",
     readTime: "4 min read",
-    href: "/blog/plaze-mlini",
+    href: "/blog/beaches-mlini",
     imageSrc: "/assets/blog2.jpg",
   },
   {
@@ -41,7 +41,7 @@ const posts: Post[] = [
       "Everything you need to know about arriving by car, airport transfer, and parking in Mlini.",
     date: "January 2025",
     readTime: "3 min read",
-    href: "/blog/dolazak-parking",
+    href: "/blog/getting-here",
     imageSrc: "/assets/blog3.jpg",
   },
 ];

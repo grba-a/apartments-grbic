@@ -6,7 +6,7 @@ export const metadata = {
   description:
     "Everything you need to know before your stay at Apartments Grbić in Mlini, Dubrovnik — booking, parking, beach access, check-in times, and more.",
   alternates: {
-    canonical: "https://apartmentsgrbic.com/pages/faq",
+    canonical: "https://apartmentsgrbic.com/faq",
   },
   openGraph: {
     title: "FAQ | Apartments Grbić — Mlini, Dubrovnik",

@@ -80,7 +80,7 @@ export default function FAQ() {
         </div>
 
         <div className="mt-12 flex flex-col items-center gap-5">
-          <a href="/pages/faq" className="btn-navy">
+          <a href="/faq" className="btn-navy">
             View All FAQs
             <span className="btn-arrow">→</span>
           </a>
