@@ -1,5 +1,7 @@
 "use client";
 
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
 // ── Icons ────────────────────────────────────────────────────────────────────
 
@@ -74,6 +76,27 @@ const socialLinks = [
 // ── Component ────────────────────────────────────────────────────────────────
 
 export default function Footer() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const isHome = pathname === "/";
+
+  const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith("#")) return;
+    e.preventDefault();
+    const sectionId = href.replace("#", "");
+    if (isHome) {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push(`/?scrollTo=${sectionId}`);
+    }
+  };
+
+  const getHref = (href: string) => {
+    if (!href.startsWith("#")) return href;
+    const sectionId = href.replace("#", "");
+    return isHome ? href : `/?scrollTo=${sectionId}`;
+  };
 
   return (
     <>
@@ -85,7 +108,7 @@ export default function Footer() {
 
             {/* Column 1 — Brand */}
             <div>
-              <a href="#top" className="flex items-baseline gap-1.5">
+              <Link href="/" className="flex items-baseline gap-1.5">
                 <span
                   className="text-lg leading-none text-white"
                   style={{ fontFamily: "var(--font-montserrat), sans-serif", fontWeight: 500 }}
@@ -98,7 +121,7 @@ export default function Footer() {
                 >
                   Grbić
                 </span>
-              </a>
+              </Link>
               <p
                 className="mt-3 max-w-[260px] text-[14px] leading-relaxed text-white/60"
                 style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
@@ -136,7 +159,8 @@ export default function Footer() {
                 {navLinks.map(({ label, href }) => (
                   <li key={href}>
                     <a
-                      href={href}
+                      href={getHref(href)}
+                      onClick={(e) => handleSectionClick(e, href)}
                       className="text-[11px] uppercase tracking-[0.15em] text-white/70 transition-colors duration-200 hover:text-[var(--color-gold)]"
                       style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
                     >

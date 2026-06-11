@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Hero from "@/src/components/Hero";
 import TrustStrip from "@/src/components/TrustStrip";
 import Apartments from "@/src/components/Apartments";
@@ -11,10 +12,14 @@ import Location from "@/src/components/Location";
 import FAQ from "@/src/components/FAQ";
 import Blog from "@/src/components/Blog";
 import Contact from "@/src/components/Contact";
+import ScrollHandler from "@/src/components/ScrollHandler";
 
 export default function Home() {
   return (
     <main>
+      <Suspense fallback={null}>
+        <ScrollHandler />
+      </Suspense>
       <Hero />
       <TrustStrip />
       <Apartments />

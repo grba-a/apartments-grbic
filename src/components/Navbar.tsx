@@ -1,12 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 import { useLang } from "@/src/i18n/LangContext";
 
 export default function Navbar() {
   const { t } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -20,6 +24,26 @@ export default function Navbar() {
   }, [menuOpen]);
 
   const textColor = scrolled ? "text-[var(--color-navy)]" : "text-white";
+  const isHome = pathname === "/";
+
+  const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith("#")) return;
+    e.preventDefault();
+    setMenuOpen(false);
+    const sectionId = href.replace("#", "");
+    if (isHome) {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push(`/?scrollTo=${sectionId}`);
+    }
+  };
+
+  const getHref = (href: string) => {
+    if (!href.startsWith("#")) return href;
+    const sectionId = href.replace("#", "");
+    return isHome ? href : `/?scrollTo=${sectionId}`;
+  };
 
   return (
     <>
@@ -33,7 +57,7 @@ export default function Navbar() {
         <nav className="mx-auto flex max-w-[1240px] items-center justify-between px-6 py-4 lg:px-8">
 
           {/* Logo */}
-          <a href="#top" className="flex items-baseline gap-1">
+          <Link href="/" className="flex items-baseline gap-1">
             <span
               className={`text-[15px] font-light uppercase tracking-[0.2em] leading-none transition-colors duration-300 ${textColor}`}
               style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
@@ -46,14 +70,15 @@ export default function Navbar() {
             >
               Grbić
             </span>
-          </a>
+          </Link>
 
           {/* Desktop nav links */}
           <ul className="hidden md:flex items-center gap-8">
             {t.nav.links.map(({ label, href }) => (
               <li key={href}>
                 <a
-                  href={href}
+                  href={getHref(href)}
+                  onClick={(e) => handleSectionClick(e, href)}
                   className={`relative text-[11px] font-medium uppercase tracking-[0.18em] transition-colors duration-300 ${textColor}
                     after:absolute after:bottom-[-3px] after:left-0 after:h-px after:w-full
                     after:origin-left after:scale-x-0 after:bg-[var(--color-gold)]
@@ -69,7 +94,8 @@ export default function Navbar() {
           {/* Desktop right */}
           <div className="hidden md:flex items-center gap-5">
             <a
-              href="#contact"
+              href={getHref("#contact")}
+              onClick={(e) => handleSectionClick(e, "#contact")}
               className="rounded-full px-6 py-2.5 text-[11px] font-medium uppercase tracking-[0.15em] text-white transition-opacity duration-200 hover:opacity-85"
               style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
             >
@@ -101,7 +127,7 @@ export default function Navbar() {
       >
         {/* Top bar */}
         <div className="flex items-center justify-between px-6 py-5">
-          <a href="#top" onClick={() => setMenuOpen(false)} className="flex items-baseline gap-1">
+          <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-baseline gap-1">
             <span
               className="text-[14px] font-light uppercase tracking-[0.2em] leading-none text-white"
               style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
@@ -114,7 +140,7 @@ export default function Navbar() {
             >
               Grbić
             </span>
-          </a>
+          </Link>
           <button
             onClick={() => setMenuOpen(false)}
             className="cursor-pointer p-2 text-white/70 hover:text-white transition-colors duration-200"
@@ -134,8 +160,8 @@ export default function Navbar() {
           {t.nav.links.map(({ label, href }) => (
             <li key={href}>
               <a
-                href={href}
-                onClick={() => setMenuOpen(false)}
+                href={getHref(href)}
+                onClick={(e) => handleSectionClick(e, href)}
                 className="text-white/80 text-[13px] font-medium uppercase tracking-[0.25em] transition-colors duration-200 hover:text-[var(--color-gold)]"
                 style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
               >
@@ -148,8 +174,8 @@ export default function Navbar() {
         {/* CTA */}
         <div className="flex flex-col items-center gap-4 pb-14">
           <a
-            href="#contact"
-            onClick={() => setMenuOpen(false)}
+            href={getHref("#contact")}
+            onClick={(e) => handleSectionClick(e, "#contact")}
             className="rounded-full px-10 py-3.5 text-[12px] font-medium uppercase tracking-[0.2em] text-white transition-opacity duration-200 hover:opacity-85"
             style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
           >
