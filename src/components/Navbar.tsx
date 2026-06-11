@@ -8,6 +8,7 @@ import { useLang } from "@/src/i18n/LangContext";
 export default function Navbar() {
   const { t } = useLang();
   const [scrolled, setScrolled] = useState(false);
+  const [lightBg, setLightBg] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
@@ -19,11 +20,19 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    const check = () => setLightBg("navLight" in document.body.dataset);
+    check();
+    const obs = new MutationObserver(check);
+    obs.observe(document.body, { attributes: true, attributeFilter: ["data-nav-light"] });
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  const textColor = scrolled ? "text-[var(--color-navy)]" : "text-white";
+  const textColor = (scrolled || lightBg) ? "text-[var(--color-navy)]" : "text-white";
   const isHome = pathname === "/";
 
   const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

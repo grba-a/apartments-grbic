@@ -1,25 +1,25 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Politika kolačića | Apartments Grbić",
-  description: "Informacije o korištenju kolačića na stranicama Apartments Grbić.",
+  title: "Cookie Policy | Apartments Grbić",
+  description: "Information about the use of cookies on the Apartments Grbić website.",
 };
 
 const cookieTypes = [
   {
-    name: "Nužni kolačići",
+    name: "Essential cookies",
     required: true,
-    desc: "Ovi kolačići su neophodni za ispravno funkcioniranje stranice. Bez njih određene funkcionalnosti neće raditi. Ne mogu se isključiti.",
+    desc: "These cookies are necessary for the website to function correctly. Without them, certain features will not work. They cannot be disabled.",
   },
   {
-    name: "Analitički kolačići",
+    name: "Analytics cookies",
     required: false,
-    desc: "Koristimo ih kako bismo razumjeli kako posjetitelji koriste stranicu — koje stranice posjećuju i kako do njih dolaze. Sve informacije su anonimne.",
+    desc: "We use these to understand how visitors use the site — which pages they visit and how they arrive. All information is anonymous.",
   },
   {
-    name: "Funkcionalni kolačići",
+    name: "Functional cookies",
     required: false,
-    desc: "Omogućuju nam pamćenje Vaših preferencija (npr. jezik, regija) kako bi Vaše sljedeće posjete bile ugodnije.",
+    desc: "These allow us to remember your preferences (e.g. language, region) to make future visits more convenient.",
   },
 ];
 
@@ -34,20 +34,20 @@ export default function CookiesPage() {
             className="mb-3 text-[13px] uppercase tracking-widest"
             style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-gold)" }}
           >
-            Pravni dokumenti
+            Legal
           </p>
           <span className="section-rule" />
           <h1
             className="text-4xl font-normal leading-tight text-white md:text-[52px]"
             style={{ fontFamily: "var(--font-playfair), serif" }}
           >
-            Politika kolačića
+            Cookie Policy
           </h1>
           <p
             className="mt-5 text-[15px] text-white/60"
             style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
           >
-            Zadnja izmjena: lipanj 2025
+            Last updated: June 2026
           </p>
         </div>
       </section>
@@ -59,9 +59,8 @@ export default function CookiesPage() {
           className="mb-12 text-[16px] leading-relaxed"
           style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
         >
-          Kolačići (cookies) su male tekstualne datoteke koje se pohranjuju na Vašem uređaju kada
-          posjetite našu stranicu. Koristimo ih kako bismo poboljšali Vaše iskustvo i razumjeli
-          kako se stranica koristi.
+          Cookies are small text files stored on your device when you visit our website.
+          We use them to improve your experience and understand how the site is used.
         </p>
 
         {/* Cookie types */}
@@ -87,7 +86,7 @@ export default function CookiesPage() {
                     fontFamily: "var(--font-montserrat), sans-serif",
                   }}
                 >
-                  {c.required ? "Uvijek aktivno" : "Po izboru"}
+                  {c.required ? "Always active" : "Optional"}
                 </span>
               </div>
               <p
@@ -109,16 +108,16 @@ export default function CookiesPage() {
             className="mb-3 text-[20px] font-normal text-white"
             style={{ fontFamily: "var(--font-playfair), serif" }}
           >
-            Kako upravljati kolačićima
+            How to manage cookies
           </h2>
           <p
             className="text-[15px] leading-relaxed text-white/70"
             style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
           >
-            Možete postaviti Vaš preglednik da odbija sve kolačiće ili da Vas obavijesti
-            kada se kolačić šalje. Napominjemo da neke funkcije stranice mogu ne raditi
-            ispravno ako onemogućite kolačiće. Detaljne upute za upravljanje kolačićima
-            pronađite u postavkama Vašeg preglednika.
+            You can set your browser to refuse all cookies or to notify you when a cookie
+            is being sent. Please note that some features of the site may not function
+            correctly if cookies are disabled. For detailed instructions, refer to your
+            browser&apos;s settings.
           </p>
         </div>
 
@@ -128,7 +127,7 @@ export default function CookiesPage() {
             className="inline-block rounded-full px-8 py-4 text-[11px] font-medium uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-85"
             style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
           >
-            ← Povratak na početnu
+            ← Back to Home
           </Link>
         </div>
       </article>

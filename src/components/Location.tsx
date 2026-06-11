@@ -156,7 +156,7 @@ export default function Location() {
           <div className="w-full overflow-hidden rounded-2xl shadow-lg md:w-[520px] md:shrink-0">
             <div className="h-[300px] md:h-[450px]">
               <iframe
-                src="https://maps.google.com/maps?q=42.623606,18.205885&z=16&output=embed"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3191.9027968513087!2d18.206059800000002!3d42.6234934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x134c0d33c6261ff5%3A0x6ef020e25d0718ff!2sApartments%20Grbic!5e1!3m2!1sen!2shr!4v1781182008091!5m2!1sen!2shr"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

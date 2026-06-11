@@ -5,16 +5,20 @@ import Image from "next/image";
 import { useLang } from "@/src/i18n/LangContext";
 
 type AspectRatio = "4/3" | "3/4" | "1/1";
-type GalleryItem = { src: string; alt: string; aspect: AspectRatio };
+type GalleryItem = { src: string; alt: string };
 
+// ── Dodaj nove slike ovdje — aspect ratio se automatski dodjeljuje ────────────
 const items: GalleryItem[] = [
-  { src: "/assets/gallery1.jpg", alt: "Gallery 1", aspect: "4/3" },
-  { src: "/assets/gallery2.jpg", alt: "Gallery 2", aspect: "3/4" },
-  { src: "/assets/gallery3.jpg", alt: "Gallery 3", aspect: "1/1" },
-  { src: "/assets/gallery4.jpg", alt: "Gallery 4", aspect: "4/3" },
-  { src: "/assets/gallery5.jpg", alt: "Gallery 5", aspect: "3/4" },
-  { src: "/assets/gallery6.jpg", alt: "Gallery 6", aspect: "1/1" },
+  { src: "/assets/gallery1.jpg", alt: "Gallery 1" },
+  { src: "/assets/gallery2.jpg", alt: "Gallery 2" },
+  { src: "/assets/gallery3.jpg", alt: "Gallery 3" },
+  { src: "/assets/gallery4.jpg", alt: "Gallery 4" },
+  { src: "/assets/gallery5.jpg", alt: "Gallery 5" },
+  { src: "/assets/gallery6.jpg", alt: "Gallery 6" },
 ];
+
+// Pattern se ponavlja: landscape → portrait → square → landscape → ...
+const ASPECT_PATTERN: AspectRatio[] = ["4/3", "3/4", "1/1"];
 
 const aspectClasses: Record<AspectRatio, string> = {
   "4/3": "aspect-[4/3]",
@@ -103,14 +107,14 @@ export default function Gallery() {
           </div>
 
           {/* Grid */}
-          <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+          <div className="columns-3 gap-2 lg:gap-4">
             {items.map((item, i) => (
               <div
                 key={item.src}
-                className="group relative mb-4 cursor-pointer overflow-hidden rounded-xl bg-gray-200 break-inside-avoid"
+                className="group relative mb-2 lg:mb-4 cursor-pointer overflow-hidden rounded-lg lg:rounded-xl bg-gray-200 break-inside-avoid"
                 onClick={() => setLightbox(i)}
               >
-                <div className={`relative ${aspectClasses[item.aspect]}`}>
+                <div className={`relative ${aspectClasses[ASPECT_PATTERN[i % ASPECT_PATTERN.length]]}`}>
                   <Image
                     src={item.src}
                     alt={item.alt}

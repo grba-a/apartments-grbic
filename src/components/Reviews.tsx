@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useId } from "react";
 import { useLang } from "@/src/i18n/LangContext";
 
@@ -124,13 +125,72 @@ function Initials({ name }: { name: string }) {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function ReviewCard({ r, t }: { r: Review; t: any }) {
+  return (
+    <div className="relative flex flex-col overflow-hidden rounded-2xl bg-white p-7 shadow-md h-full">
+      <span
+        className="pointer-events-none absolute -top-1 left-5 select-none text-[72px] leading-none"
+        style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-gold)", opacity: 0.12 }}
+        aria-hidden="true"
+      >"</span>
+
+      <div className="relative mb-4 flex items-center justify-between">
+        <StarRow score={r.score} size={15} />
+        <span
+          className="text-[12px] font-medium"
+          style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+        >
+          {t.reviews.dates[r.date] ?? r.date}
+        </span>
+      </div>
+
+      <p
+        className="relative flex-1 text-[14px] leading-[1.75] italic"
+        style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+      >
+        "{r.text}"
+      </p>
+
+      <div className="mt-5 flex items-center gap-3 border-t pt-4" style={{ borderColor: "#F3F4F6" }}>
+        <Initials name={r.name} />
+        <div className="flex flex-1 flex-col gap-1.5">
+          <div className="flex items-center gap-2">
+            <span
+              className="text-[13px] font-semibold"
+              style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}
+            >
+              {r.name}
+            </span>
+            <span
+              className="text-[11px]"
+              style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+            >
+              · {t.reviews.locations[r.location] ?? r.location}
+            </span>
+          </div>
+          <PlatformBadge platform={r.platform} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Reviews() {
   const { t } = useLang();
+  const [current, setCurrent] = useState(0);
+
+  // Distance between card centers in the 3D scene
+  const OFFSET = 308;
+
+  const prev = () => setCurrent((c) => Math.max(0, c - 1));
+  const next = () => setCurrent((c) => Math.min(reviews.length - 1, c + 1));
 
   return (
     <section id="reviews" className="py-24" style={{ backgroundColor: "var(--color-sand)" }}>
       <div className="mx-auto max-w-[1240px] px-6">
 
+        {/* Header */}
         <div className="reveal flex flex-col items-center text-center">
           <span
             className="mb-3 text-[11px] uppercase tracking-[0.2em]"
@@ -156,10 +216,7 @@ export default function Reviews() {
         {/* Platform stats */}
         <div className="reveal reveal-delay-1 mt-14 mb-16 grid grid-cols-3 gap-4 md:gap-8 max-w-[680px] mx-auto">
           {platformStats.map((p) => (
-            <div
-              key={p.name}
-              className="flex flex-col items-center gap-2 rounded-2xl bg-white p-5 shadow-sm"
-            >
+            <div key={p.name} className="flex flex-col items-center gap-2 rounded-2xl bg-white p-5 shadow-sm">
               <span
                 className="text-[10px] uppercase tracking-[0.15em] text-center"
                 style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
@@ -183,61 +240,95 @@ export default function Reviews() {
           ))}
         </div>
 
-        {/* Reviews grid */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-          {reviews.map((r, idx) => (
+        {/* ── Tablet: simple 2-col grid (md only) ──────────────────────────── */}
+        <div className="hidden md:grid lg:hidden grid-cols-2 gap-5">
+          {reviews.map((r) => (
+            <ReviewCard key={r.name} r={r} t={t} />
+          ))}
+        </div>
+
+        {/* ── Desktop: 3D coverflow carousel (lg+) ─────────────────────────── */}
+        <div className="hidden lg:block">
+          {/* Stage */}
+          <div className="relative mx-auto" style={{ height: "370px" }}>
+            {reviews.map((r, idx) => {
+              const rel = idx - current;
+              const abs = Math.abs(rel);
+              if (abs > 2) return null;
+
+              const isSide = abs === 1;
+              const isFar  = abs === 2;
+
+              return (
+                <div
+                  key={r.name}
+                  onClick={() => isSide && setCurrent(idx)}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: "50%",
+                    width: "380px",
+                    height: "360px",
+                    transform: `perspective(1100px) translateX(calc(-50% + ${rel * OFFSET}px)) scale(${abs === 0 ? 1 : 0.78}) rotateY(${-rel * 20}deg)`,
+                    opacity: abs === 0 ? 1 : abs === 1 ? 0.68 : 0,
+                    zIndex: 10 - abs * 3,
+                    transition: "transform 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease",
+                    willChange: "transform, opacity",
+                    cursor: isSide ? "pointer" : "default",
+                    transformOrigin: rel < 0 ? "right center" : rel > 0 ? "left center" : "center center",
+                  }}
+                >
+                  {/* Hover glow on side cards */}
+                  {isSide && (
+                    <div
+                      className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 hover:opacity-100 z-10 pointer-events-none"
+                      style={{ boxShadow: "inset 0 0 0 2px var(--color-gold)" }}
+                    />
+                  )}
+                  {/* Dim overlay on far cards */}
+                  {isFar && (
+                    <div className="absolute inset-0 rounded-2xl z-10 pointer-events-none" style={{ background: "rgba(0,0,0,0.15)" }} />
+                  )}
+                  <ReviewCard r={r} t={t} />
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Dots */}
+          <div className="mt-8 flex items-center justify-center gap-3">
+            {reviews.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                aria-label={`Review ${i + 1}`}
+                className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                style={{
+                  width: i === current ? "28px" : "8px",
+                  backgroundColor: i === current ? "var(--color-gold)" : "#CBD5E1",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* ── Mobile: vertical snap scroll (<md) ────────────────────────────── */}
+        <div
+          className="md:hidden overflow-y-scroll"
+          style={{
+            height: "72vh",
+            scrollSnapType: "y mandatory",
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+          } as React.CSSProperties}
+        >
+          {reviews.map((r) => (
             <div
               key={r.name}
-              className={`reveal group relative flex flex-col overflow-hidden rounded-2xl bg-white p-7 shadow-sm transition-shadow duration-300 hover:shadow-md ${idx >= 3 ? "reveal-delay-2" : "reveal-delay-1"}`}
+              className="px-1 pb-4"
+              style={{ scrollSnapAlign: "start" }}
             >
-              <span
-                className="pointer-events-none absolute -top-1 left-5 select-none text-[72px] leading-none"
-                style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-gold)", opacity: 0.12 }}
-                aria-hidden="true"
-              >
-                "
-              </span>
-
-              <div className="relative mb-4 flex items-center justify-between">
-                <StarRow score={r.score} size={15} />
-                <span
-                  className="text-[12px] font-medium"
-                  style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
-                >
-                  {t.reviews.dates[r.date] ?? r.date}
-                </span>
-              </div>
-
-              <p
-                className="relative flex-1 text-[14px] leading-[1.75] italic"
-                style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
-              >
-                "{r.text}"
-              </p>
-
-              <div
-                className="mt-5 flex items-center gap-3 border-t pt-4"
-                style={{ borderColor: "#F3F4F6" }}
-              >
-                <Initials name={r.name} />
-                <div className="flex flex-1 flex-col gap-1.5">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="text-[13px] font-semibold"
-                      style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}
-                    >
-                      {r.name}
-                    </span>
-                    <span
-                      className="text-[11px]"
-                      style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
-                    >
-                      · {t.reviews.locations[r.location] ?? r.location}
-                    </span>
-                  </div>
-                  <PlatformBadge platform={r.platform} />
-                </div>
-              </div>
+              <ReviewCard r={r} t={t} />
             </div>
           ))}
         </div>

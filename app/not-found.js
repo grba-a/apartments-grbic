@@ -1,7 +1,8 @@
 import Link from "next/link";
+import NavbarLightTheme from "@/src/components/NavbarLightTheme";
 
 export const metadata = {
-  title: "Stranica nije pronađena | Apartments Grbić",
+  title: "Page Not Found | Apartments Grbić",
 };
 
 export default function NotFound() {
@@ -10,6 +11,7 @@ export default function NotFound() {
       className="flex min-h-[70vh] flex-col items-center justify-center px-6 text-center"
       style={{ backgroundColor: "var(--color-sand)" }}
     >
+      <NavbarLightTheme />
       {/* 404 number */}
       <p
         className="text-[120px] font-normal leading-none md:text-[160px]"
@@ -42,15 +44,15 @@ export default function NotFound() {
         className="mb-4 text-3xl font-normal md:text-[40px]"
         style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
       >
-        Stranica nije pronađena
+        Page Not Found
       </h1>
 
       <p
         className="mb-10 max-w-[420px] text-[15px] leading-relaxed"
         style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
       >
-        Stranica koju tražite ne postoji ili je premještena.
-        Vratite se na početnu i pronađite sve što trebate.
+        The page you&apos;re looking for doesn&apos;t exist or has been moved.
+        Head back to the homepage to find everything you need.
       </p>
 
       <div className="flex flex-wrap justify-center gap-4">
@@ -59,7 +61,7 @@ export default function NotFound() {
           className="rounded-full px-8 py-4 text-[11px] font-medium uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-85"
           style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
         >
-          Povratak na početnu
+          Back to Home
         </Link>
         <Link
           href="/#contact"
@@ -70,7 +72,7 @@ export default function NotFound() {
             fontFamily: "var(--font-montserrat), sans-serif",
           }}
         >
-          Kontaktirajte nas
+          Contact Us
         </Link>
       </div>
     </main>

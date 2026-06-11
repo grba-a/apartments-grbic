@@ -58,11 +58,12 @@ function WhatsAppIcon() {
 
 const navLinks = [
   { label: "Apartments", href: "#apartments" },
-  { label: "About", href: "#about" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Location", href: "#location" },
-  { label: "Blog", href: "#blog" },
-  { label: "Contact", href: "#contact" },
+  { label: "About",      href: "#about" },
+  { label: "Gallery",    href: "#gallery" },
+  { label: "Location",   href: "#location" },
+  { label: "Blog",       href: "/blog" },
+  { label: "FAQ",        href: "/faq" },
+  { label: "Contact",    href: "#contact" },
 ];
 
 const socialLinks = [
@@ -108,16 +109,16 @@ export default function Footer() {
 
             {/* Column 1 — Brand */}
             <div>
-              <Link href="/" className="flex items-baseline gap-1.5">
+              <Link href="/" className="flex items-baseline gap-1">
                 <span
-                  className="text-lg leading-none text-white"
-                  style={{ fontFamily: "var(--font-montserrat), sans-serif", fontWeight: 500 }}
+                  className="text-[15px] font-light uppercase tracking-[0.2em] leading-none text-white"
+                  style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
                 >
                   Apartments
                 </span>
                 <span
-                  className="text-xl leading-none text-white"
-                  style={{ fontFamily: "var(--font-playfair), serif", fontStyle: "italic", fontWeight: 600 }}
+                  className="text-[20px] leading-none italic font-semibold"
+                  style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-gold)" }}
                 >
                   Grbić
                 </span>
@@ -231,26 +232,21 @@ export default function Footer() {
             >
               © 2025 Apartments Grbić. All rights reserved.
             </span>
-            <span
-              className="text-[13px] text-white/30"
-              style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
-            >
-              Mlini · Dubrovnik · Croatia
-            </span>
-            <div className="flex gap-4">
-              {[
-                { label: "Privacy", href: "/privacy" },
-                { label: "Terms", href: "/terms" },
-              ].map(({ label, href }) => (
-                <a
-                  key={href}
-                  href={href}
-                  className="text-[13px] text-white/40 transition-colors duration-200 hover:text-white/80"
-                  style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
-                >
-                  {label}
-                </a>
-              ))}
+            <div className="flex gap-5">
+              <Link
+                href="/privacy"
+                className="text-[13px] text-white/60 transition-colors duration-200 hover:text-[var(--color-gold)]"
+                style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/terms"
+                className="text-[13px] text-white/60 transition-colors duration-200 hover:text-[var(--color-gold)]"
+                style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+              >
+                Terms & Conditions
+              </Link>
             </div>
           </div>
 

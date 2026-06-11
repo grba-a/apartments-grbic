@@ -1,34 +1,34 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Privatnost | Apartments Grbić",
-  description: "Politika privatnosti Apartments Grbić — kako prikupljamo i koristimo Vaše podatke.",
+  title: "Privacy Policy | Apartments Grbić",
+  description: "Privacy policy of Apartments Grbić — how we collect and use your personal data.",
 };
 
 const sections = [
   {
-    title: "Koje podatke prikupljamo",
-    body: "Prikupljamo isključivo podatke koje nam Vi dobrovoljno pružate putem kontakt forme: ime i prezime, e-mail adresu i sadržaj poruke. Ne prikupljamo automatski nikakve osobne podatke bez Vaše suglasnosti.",
+    title: "What data we collect",
+    body: "We collect only the data you voluntarily provide through the contact form: your name, email address, and the content of your message. We do not automatically collect any personal data without your consent.",
   },
   {
-    title: "Kako koristimo Vaše podatke",
-    body: "Vaše podatke koristimo isključivo u svrhu odgovora na Vaš upit o rezervaciji smještaja. Ne koristimo ih u marketinške svrhe, ne dijeljimo ih s trećim stranama niti ih prodajemo.",
+    title: "How we use your data",
+    body: "Your data is used solely to respond to your accommodation enquiry. We do not use it for marketing purposes, share it with third parties, or sell it in any form.",
   },
   {
-    title: "Pohrana podataka",
-    body: "Podatke koje nam pošaljete čuvamo samo onoliko dugo koliko je potrebno za obradu Vašeg upita. Nakon završenog boravka ili odbijenijeg upita, osobne podatke brišemo u razumnom roku.",
+    title: "Data storage",
+    body: "We retain the data you send us only for as long as necessary to process your enquiry. After your stay concludes or an enquiry is declined, personal data is deleted within a reasonable time.",
   },
   {
-    title: "Vaša prava",
-    body: "U svakom trenutku imate pravo zatražiti uvid u podatke koje o Vama čuvamo, zatražiti njihovu ispravku ili brisanje. Zahtjev možete uputiti na: apt.grbic.mlini@gmail.com",
+    title: "Your rights",
+    body: "You have the right at any time to request access to the data we hold about you, ask for corrections, or request deletion. Submit your request to: apt.grbic.mlini@gmail.com",
   },
   {
-    title: "Kolačići (cookies)",
-    body: "Naša web stranica koristi isključivo tehničke kolačiće neophodne za ispravno funkcioniranje stranice. Ne koristimo kolačiće za praćenje ili profiliranje posjetitelja bez prethodne suglasnosti.",
+    title: "Cookies",
+    body: "Our website uses only technical cookies that are strictly necessary for the site to function correctly. We do not use cookies for tracking or profiling visitors without prior consent.",
   },
   {
-    title: "Kontakt",
-    body: "Za sva pitanja vezana uz privatnost podataka obratite nam se na: apt.grbic.mlini@gmail.com ili +385 98 96 000 88.",
+    title: "Contact",
+    body: "For all questions related to data privacy, contact us at: apt.grbic.mlini@gmail.com or +385 98 96 000 88.",
   },
 ];
 
@@ -43,20 +43,20 @@ export default function PrivacyPage() {
             className="mb-3 text-[13px] uppercase tracking-widest"
             style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-gold)" }}
           >
-            Pravni dokumenti
+            Legal
           </p>
           <span className="section-rule" />
           <h1
             className="text-4xl font-normal leading-tight text-white md:text-[52px]"
             style={{ fontFamily: "var(--font-playfair), serif" }}
           >
-            Politika privatnosti
+            Privacy Policy
           </h1>
           <p
             className="mt-5 text-[15px] text-white/60"
             style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
           >
-            Zadnja izmjena: lipanj 2025
+            Last updated: June 2026
           </p>
         </div>
       </section>
@@ -88,7 +88,7 @@ export default function PrivacyPage() {
             className="inline-block rounded-full px-8 py-4 text-[11px] font-medium uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-85"
             style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
           >
-            ← Povratak na početnu
+            ← Back to Home
           </Link>
         </div>
       </article>

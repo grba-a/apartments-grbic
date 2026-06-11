@@ -50,8 +50,8 @@ const items = [
 export default function TrustStrip() {
   return (
     <div style={{ backgroundColor: "var(--color-navy)" }} className="border-b border-white/5">
-      <div className="mx-auto max-w-[1240px] px-6">
-        <div className="flex flex-wrap items-center justify-center gap-0 divide-x divide-white/10">
+      <div className="mx-auto max-w-[1240px] overflow-x-auto">
+        <div className="flex min-w-max items-center justify-center gap-0 divide-x divide-white/10 px-6 md:min-w-0 md:flex-wrap">
           {items.map((item, i) => {
             const inner = (
               <div className="flex items-center gap-1.5 px-4 py-3.5 md:px-6">

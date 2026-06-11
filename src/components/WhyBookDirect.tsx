@@ -35,17 +35,29 @@ const pillars = [
   {
     Icon: ShieldIcon,
     title: "Best Rate Guaranteed",
-    body: "No hidden platform fees. No middleman markup. Booking directly with us always gives you the lowest available rate — and we'll match any price you find elsewhere.",
+    bullets: [
+      "No platform fees or middleman markup",
+      "Lowest rate — price-match guaranteed",
+      "Pay directly, save more",
+    ],
   },
   {
     Icon: PersonIcon,
     title: "Personal Service",
-    body: "You communicate directly with the owners. We know the area intimately, speak your language, and respond within hours — not automated messages, real people.",
+    bullets: [
+      "Direct contact with the owners",
+      "Local expertise & recommendations",
+      "Real people — response within hours",
+    ],
   },
   {
     Icon: CalendarIcon,
     title: "Full Flexibility",
-    body: "Direct bookings come with the most flexibility. Whether you need a late check-in, an early arrival, or a special arrangement — we'll do our best to accommodate.",
+    bullets: [
+      "Late check-in or early arrival",
+      "Special requests welcome",
+      "We'll always do our best to accommodate",
+    ],
   },
 ];
 
@@ -77,7 +89,7 @@ export default function WhyBookDirect() {
         </div>
 
         <div className="reveal mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {pillars.map(({ Icon, title, body }) => (
+          {pillars.map(({ Icon, title, bullets }) => (
             <div
               key={title}
               className="flex flex-col items-start rounded-2xl bg-white p-8 shadow-sm"
@@ -89,17 +101,23 @@ export default function WhyBookDirect() {
                 <Icon />
               </span>
               <h3
-                className="mb-3 text-[22px] font-normal leading-snug"
+                className="mb-4 text-[22px] font-normal leading-snug"
                 style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
               >
                 {title}
               </h3>
-              <p
-                className="text-[14px] leading-relaxed"
-                style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
-              >
-                {body}
-              </p>
+              <ul className="flex flex-col gap-2">
+                {bullets.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-[14px] leading-snug"
+                    style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+                  >
+                    <span className="mt-[3px] shrink-0 text-[var(--color-gold)]">—</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>

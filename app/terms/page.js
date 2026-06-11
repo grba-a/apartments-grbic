@@ -1,38 +1,38 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Uvjeti korištenja | Apartments Grbić",
-  description: "Uvjeti korištenja i opći uvjeti rezervacije Apartments Grbić, Mlini, Dubrovnik.",
+  title: "Terms & Conditions | Apartments Grbić",
+  description: "Terms and conditions of stay at Apartments Grbić, Mlini, Dubrovnik.",
 };
 
 const sections = [
   {
-    title: "Opće odredbe",
-    body: "Ovi uvjeti primjenjuju se na sve goste koji borave u Apartments Grbić (vlasnik: obitelj Grbić, Rivijera 10, 20207 Mlini, Hrvatska). Rezervacijom smještaja gost potvrđuje da je pročitao i prihvatio ove uvjete.",
+    title: "General provisions",
+    body: "These terms apply to all guests staying at Apartments Grbić (owner: Grbić family, Rivijera 10, 20207 Mlini, Croatia). By making a reservation, the guest confirms they have read and accepted these terms.",
   },
   {
-    title: "Rezervacija i plaćanje",
-    body: "Rezervacija se smatra potvrđenom tek po primitku pisane potvrde od strane vlasnika. Uplate se vrše prema dogovoru — gotovinom pri dolasku ili bankovnim transferom prema uputi. Cijene uključuju PDV, Wi-Fi i parking.",
+    title: "Booking & payment",
+    body: "A reservation is considered confirmed only upon receipt of written confirmation from the owner. Payment is made by agreement — in cash on arrival or by bank transfer as instructed. Prices include VAT, Wi-Fi, and parking.",
   },
   {
-    title: "Check-in i check-out",
-    body: "Check-in je moguć od 14:00 sati. Check-out je do 10:00 sati. Rani dolazak ili kasni odlazak mogući su uz prethodnu najavu i ovisno o dostupnosti, bez naknade.",
+    title: "Check-in & check-out",
+    body: "Check-in is available from 14:00. Check-out is by 10:00. Early arrival or late departure may be possible with advance notice, subject to availability, at no extra charge.",
   },
   {
-    title: "Otkazivanje rezervacije",
-    body: "Otkazivanje do 7 dana prije dolaska: povrat uplate u cijelosti. Otkazivanje unutar 7 dana: zadržava se 50% iznosa. Nepojavljivanje (no-show): zadržava se puni iznos. Preporučamo putno osiguranje.",
+    title: "Cancellation policy",
+    body: "Cancellation more than 7 days before arrival: full refund. Cancellation within 7 days: 50% of the total amount is retained. No-show: full amount is retained. We recommend travel insurance.",
   },
   {
-    title: "Kućni red",
-    body: "Gosti su dužni čuvati red i tišinu, posebno između 22:00 i 08:00 sati. Pušenje u apartmanima nije dopušteno. Kućni ljubimci nisu dopušteni bez prethodnog dogovora. Vlasnik zadržava pravo naplate štete uzrokovane nemarom.",
+    title: "House rules",
+    body: "Guests are required to maintain order and quiet, particularly between 22:00 and 08:00. Smoking inside the apartments is not permitted. Pets are not allowed without prior agreement. The owner reserves the right to charge for damage caused by negligence.",
   },
   {
-    title: "Odgovornost",
-    body: "Vlasnik ne odgovara za gubitak ili oštećenje osobnih predmeta gostiju. Gosti borave u apartmanima na vlastitu odgovornost. Vlasnik ne odgovara za prekide usluga uzrokovane višom silom.",
+    title: "Liability",
+    body: "The owner is not liable for the loss or damage of guests' personal belongings. Guests stay at their own risk. The owner is not responsible for service interruptions caused by force majeure.",
   },
   {
-    title: "Mjerodavno pravo",
-    body: "Na ove uvjete primjenjuje se pravo Republike Hrvatske. Za rješavanje sporova nadležan je sud u Dubrovniku.",
+    title: "Governing law",
+    body: "These terms are governed by the laws of the Republic of Croatia. Any disputes fall under the jurisdiction of the court in Dubrovnik.",
   },
 ];
 
@@ -47,20 +47,20 @@ export default function TermsPage() {
             className="mb-3 text-[13px] uppercase tracking-widest"
             style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-gold)" }}
           >
-            Pravni dokumenti
+            Legal
           </p>
           <span className="section-rule" />
           <h1
             className="text-4xl font-normal leading-tight text-white md:text-[52px]"
             style={{ fontFamily: "var(--font-playfair), serif" }}
           >
-            Uvjeti korištenja
+            Terms & Conditions
           </h1>
           <p
             className="mt-5 text-[15px] text-white/60"
             style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
           >
-            Zadnja izmjena: lipanj 2025
+            Last updated: June 2026
           </p>
         </div>
       </section>
@@ -92,7 +92,7 @@ export default function TermsPage() {
             className="inline-block rounded-full px-8 py-4 text-[11px] font-medium uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-85"
             style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
           >
-            ← Povratak na početnu
+            ← Back to Home
           </Link>
         </div>
       </article>
