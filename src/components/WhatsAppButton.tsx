@@ -1,19 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLang } from "@/src/i18n/LangContext";
 
 export default function WhatsAppButton() {
+  const { t } = useLang();
   const [visible, setVisible] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 3000);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setVisible(true), 3000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <div
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 transition-all duration-500"
+      className="fixed bottom-6 right-6 z-50 hidden items-center gap-3 transition-all duration-500 md:flex"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(16px)",
@@ -30,15 +32,15 @@ export default function WhatsAppButton() {
           transform: showTooltip ? "translateX(0)" : "translateX(8px)",
         }}
       >
-        Message us now
+        {t.whatsapp.tooltip}
       </div>
 
       {/* WhatsApp button */}
       <a
-        href="https://wa.me/385989600088?text=Pozdrav%2C%20zanima%20me%20dostupnost%20apartmana."
+        href="https://wa.me/385989600088?text=Hello%2C%20I'm%20interested%20in%20apartment%20availability."
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Contact us on WhatsApp"
+        aria-label={t.whatsapp.ariaLabel}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         className="relative flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-transform duration-200 hover:scale-110"

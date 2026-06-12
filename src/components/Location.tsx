@@ -69,11 +69,15 @@ export default function Location() {
         <div className="mt-16 flex flex-col gap-12 md:flex-row md:items-start">
 
           {/* Left column */}
-          <div className="flex flex-1 flex-col">
+          <div className="reveal reveal-left flex flex-1 flex-col">
 
-            <ul className="flex flex-col gap-4">
-              {t.location.highlights.map((item) => (
-                <li key={item} className="flex items-start gap-3">
+            <ul className="flex flex-col gap-3">
+              {t.location.highlights.map((item, i) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-3 rounded-xl bg-white/60 px-4 py-3 transition-colors duration-200 hover:bg-white"
+                  style={{ transitionDelay: `${i * 40}ms` }}
+                >
                   <CheckIcon />
                   <span
                     className="text-[15px] leading-snug"
@@ -153,18 +157,20 @@ export default function Location() {
           </div>
 
           {/* Right column — map */}
-          <div className="w-full overflow-hidden rounded-2xl shadow-lg md:w-[520px] md:shrink-0">
-            <div className="h-[300px] md:h-[450px]">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3191.9027968513087!2d18.206059800000002!3d42.6234934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x134c0d33c6261ff5%3A0x6ef020e25d0718ff!2sApartments%20Grbic!5e1!3m2!1sen!2shr!4v1781182008091!5m2!1sen!2shr"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title={t.location.mapTitle}
-              />
+          <div className="reveal reveal-right relative w-full md:w-[520px] md:shrink-0">
+            <div className="relative overflow-hidden rounded-2xl shadow-lg">
+              <div className="h-[300px] md:h-[450px]">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3191.9027968513087!2d18.206059800000002!3d42.6234934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x134c0d33c6261ff5%3A0x6ef020e25d0718ff!2sApartments%20Grbic!5e1!3m2!1sen!2shr!4v1781182008091!5m2!1sen!2shr"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={t.location.mapTitle}
+                />
+              </div>
             </div>
           </div>
 

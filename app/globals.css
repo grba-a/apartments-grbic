@@ -15,6 +15,22 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Fixed navbar shouldn't cover anchored sections */
+section[id],
+div[id="top"] {
+  scroll-margin-top: 72px;
+}
+
+::selection {
+  background-color: var(--color-gold);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
 body {
   font-family: var(--font-montserrat), sans-serif;
   background: #ffffff;
@@ -92,12 +108,59 @@ h1, h2, h3, h4 {
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 
+/* Directional reveal variants (combine with .reveal) */
+.reveal.reveal-left  { transform: translateX(-36px); }
+.reveal.reveal-right { transform: translateX(36px); }
+.reveal.reveal-left.revealed,
+.reveal.reveal-right.revealed { transform: translateX(0); }
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal,
+  .reveal.reveal-left,
+  .reveal.reveal-right {
     opacity: 1;
     transform: none;
     transition: none;
   }
+}
+
+/* ── Hero slow Ken Burns zoom ─────────────────────────────────── */
+@keyframes heroZoom {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+.hero-zoom {
+  animation: heroZoom 22s ease-out forwards;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-zoom { animation: none; }
+}
+
+/* ── Gallery filter fade-in ───────────────────────────────────── */
+@keyframes galleryFade {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.gallery-fade {
+  animation: galleryFade 0.45s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery-fade { animation: none; }
+}
+
+/* ── Hide scrollbar on snap carousels ─────────────────────────── */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Sticky mobile booking bar ────────────────────────────────── */
+.sticky-book-bar {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 /* ── Brand CTA Buttons ────────────────────────────────────────── */

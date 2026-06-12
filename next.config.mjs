@@ -2,7 +2,11 @@
 const nextConfig = {
   devIndicators: false,
   images: {
-    domains: ["localhost", "apartments-grbic.vercel.app", "apartmentsgrbic.com"],
+    remotePatterns: [
+      { protocol: "http", hostname: "localhost" },
+      { protocol: "https", hostname: "apartments-grbic.vercel.app" },
+      { protocol: "https", hostname: "apartmentsgrbic.com" },
+    ],
   },
 
   async redirects() {

@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "The Most Beautiful Beaches Near Mlini | Apartments Grbić",
+  title: "The Most Beautiful Beaches Near Mlini",
+  alternates: { canonical: "/blog/beaches-mlini" },
   description:
     "A guide to the best beaches in Mlini and along the Dubrovnik riviera — pebble coves, family beaches, and hidden swimming spots.",
 };

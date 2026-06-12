@@ -6,6 +6,12 @@ export default function PullQuote() {
       className="relative overflow-hidden py-24"
       style={{ backgroundColor: "var(--color-navy)" }}
     >
+      {/* Soft gold glow behind the quote */}
+      <div
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[360px] w-[640px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{ background: "radial-gradient(ellipse, rgba(201,168,76,0.10) 0%, transparent 70%)" }}
+        aria-hidden="true"
+      />
       {/* Decorative large quotation mark */}
       <span
         className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 select-none text-[220px] leading-none"

@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "About — Ana Grbić | Apartments Grbić Mlini",
+  title: "About — Ana Grbić, Your Host in Mlini",
+  alternates: { canonical: "/about" },
   description:
     "Meet Ana Grbić — host with over 20 years of experience welcoming guests to Mlini, Dubrovnik. A family story, a passion for hospitality, and a beautiful place to stay.",
 };

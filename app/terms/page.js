@@ -1,7 +1,8 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Terms & Conditions | Apartments Grbić",
+  title: "Terms & Conditions",
+  alternates: { canonical: "/terms" },
   description: "Terms and conditions of stay at Apartments Grbić, Mlini, Dubrovnik.",
 };
 

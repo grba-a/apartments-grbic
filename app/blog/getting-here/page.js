@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "How to Get to Apartments Grbić — Parking & Transfer Guide | Apartments Grbić",
+  title: "How to Get Here — Parking & Transfer Guide",
+  alternates: { canonical: "/blog/getting-here" },
   description:
     "Practical guide for arriving at Apartments Grbić in Mlini — by car, plane, bus, and water taxi. Free parking available on site.",
 };

@@ -128,14 +128,17 @@ export default function Amenities() {
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-2 gap-6 md:grid-cols-4">
-          {amenityKeys.map((key) => (
+        <div className="mt-16 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+          {amenityKeys.map((key, i) => (
             <div
               key={key}
-              className="amenity-card group flex flex-col items-center rounded-2xl p-8 transition-colors duration-300"
+              className={`amenity-card reveal reveal-delay-${(i % 4) % 3 + 1} group flex flex-col items-center rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-md`}
               style={{ backgroundColor: "var(--color-sand)" }}
             >
-              <span className="amenity-icon transition-colors duration-300" style={{ color: "var(--color-navy)" }}>
+              <span
+                className="amenity-icon transition-all duration-300 group-hover:scale-110"
+                style={{ color: "var(--color-navy)" }}
+              >
                 {amenityIcons[key]}
               </span>
               <span
@@ -149,10 +152,10 @@ export default function Amenities() {
         </div>
 
         <div
-          className="mt-16 rounded-2xl px-8 py-8 text-center md:px-12"
-          style={{ backgroundColor: "var(--color-navy)" }}
+          className="reveal mt-16 rounded-2xl px-8 py-8 text-center md:px-12"
+          style={{ background: "linear-gradient(120deg, var(--color-navy) 0%, var(--color-azure) 100%)" }}
         >
-          <p className="text-base text-white/80" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
+          <p className="text-base text-white/85" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
             {t.amenities.banner}
           </p>
         </div>

@@ -5,6 +5,7 @@ import Footer from "@/src/components/Footer";
 import CookieBanner from "@/src/components/CookieBanner";
 import RevealObserver from "@/src/components/RevealObserver";
 import WhatsAppButton from "@/src/components/WhatsAppButton";
+import StickyBookBar from "@/src/components/StickyBookBar";
 import { LangProvider } from "@/src/i18n/LangContext";
 
 const playfair = Playfair_Display({
@@ -65,7 +66,7 @@ export const metadata = {
       "Family-run holiday apartments in Mlini, 10 minutes from Dubrovnik Old Town. Sea-view balconies, free parking, free Wi-Fi. 8.7 on Booking.com · 290+ reviews.",
     images: [
       {
-        url: "/assets/hero-bg.jpg",
+        url: "/assets/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Apartments Grbić — sea view apartments in Mlini, Dubrovnik Riviera, Croatia",
@@ -77,11 +78,11 @@ export const metadata = {
     title: "Apartments Grbić | Mlini, Dubrovnik",
     description:
       "Family-run holiday apartments in Mlini, 10 minutes from Dubrovnik. Sea-view balconies, free parking, free Wi-Fi.",
-    images: ["/assets/hero-bg.jpg"],
+    images: ["/assets/og-image.jpg"],
   },
-  alternates: {
-    canonical: SITE_URL,
-  },
+  manifest: "/site.webmanifest",
+  // Canonical is set per-page (a root canonical would mark every subpage
+  // as a duplicate of the homepage).
   verification: {
     // google: "add-your-google-search-console-token-here",
   },
@@ -195,6 +196,7 @@ export default function RootLayout({ children }) {
           <Footer />
           <CookieBanner />
           <WhatsAppButton />
+          <StickyBookBar />
           <RevealObserver />
         </LangProvider>
       </body>

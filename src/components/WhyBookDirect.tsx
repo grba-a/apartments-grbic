@@ -63,8 +63,15 @@ const pillars = [
 
 export default function WhyBookDirect() {
   return (
-    <section className="py-24" style={{ backgroundColor: "var(--color-sand)" }}>
-      <div className="mx-auto max-w-[1240px] px-6">
+    <section className="relative overflow-hidden py-24" style={{ backgroundColor: "var(--color-navy)" }}>
+      {/* Subtle gold glow anchoring the section */}
+      <div
+        className="pointer-events-none absolute -top-40 left-1/2 h-[420px] w-[720px] -translate-x-1/2 rounded-full"
+        style={{ background: "radial-gradient(ellipse, rgba(201,168,76,0.14) 0%, transparent 70%)" }}
+        aria-hidden="true"
+      />
+
+      <div className="relative mx-auto max-w-[1240px] px-6">
 
         <div className="reveal flex flex-col items-center text-center">
           <span
@@ -75,43 +82,43 @@ export default function WhyBookDirect() {
           </span>
           <span className="section-rule" />
           <h2
-            className="mb-4 text-4xl font-normal leading-tight md:text-[48px]"
-            style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
+            className="mb-4 text-4xl font-normal leading-tight text-white md:text-[48px]"
+            style={{ fontFamily: "var(--font-playfair), serif" }}
           >
             Skip the Middleman
           </h2>
           <p
-            className="max-w-[500px] text-base"
-            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+            className="max-w-[500px] text-base text-white/65"
+            style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
           >
             Booking directly with us means a better price, a personal touch, and none of the platform fees passed on to you.
           </p>
         </div>
 
-        <div className="reveal mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {pillars.map(({ Icon, title, bullets }) => (
+        <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {pillars.map(({ Icon, title, bullets }, i) => (
             <div
               key={title}
-              className="flex flex-col items-start rounded-2xl bg-white p-8 shadow-sm"
+              className={`reveal reveal-delay-${i + 1} flex flex-col items-start rounded-2xl border border-white/10 bg-white/[0.05] p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-gold)]/40 hover:bg-white/[0.08]`}
             >
               <span
                 className="mb-5 flex h-14 w-14 items-center justify-center rounded-full"
-                style={{ backgroundColor: "var(--color-navy)", color: "var(--color-gold)" }}
+                style={{ backgroundColor: "var(--color-gold)", color: "var(--color-navy)" }}
               >
                 <Icon />
               </span>
               <h3
-                className="mb-4 text-[22px] font-normal leading-snug"
-                style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
+                className="mb-4 text-[22px] font-normal leading-snug text-white"
+                style={{ fontFamily: "var(--font-playfair), serif" }}
               >
                 {title}
               </h3>
-              <ul className="flex flex-col gap-2">
+              <ul className="flex flex-col gap-2.5">
                 {bullets.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[14px] leading-snug"
-                    style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+                    className="flex items-start gap-2 text-[14px] leading-snug text-white/70"
+                    style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
                   >
                     <span className="mt-[3px] shrink-0 text-[var(--color-gold)]">—</span>
                     {item}

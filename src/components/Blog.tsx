@@ -140,7 +140,7 @@ function BlogCard({ post }: { post: Post }) {
 
 export default function Blog() {
   return (
-    <section id="blog" className="bg-white py-24">
+    <section id="blog" className="py-24" style={{ backgroundColor: "var(--color-sand)" }}>
       <div className="mx-auto max-w-[1240px] px-6">
 
         {/* Header */}

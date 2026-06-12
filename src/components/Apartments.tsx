@@ -7,7 +7,7 @@ import { useLang } from "@/src/i18n/LangContext";
 
 function AreaIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="1" y="1" width="14" height="14" rx="2" />
       <path d="M1 5h14M5 1v14" strokeWidth="1.2" strokeDasharray="2 2" />
     </svg>
@@ -16,7 +16,7 @@ function AreaIcon() {
 
 function GuestsIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="6" cy="4.5" r="2.5" />
       <path d="M1 14c0-2.8 2.2-5 5-5s5 2.2 5 5" />
       <circle cx="12.5" cy="5" r="2" />
@@ -27,7 +27,7 @@ function GuestsIcon() {
 
 function WifiIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M1 5.5a10 10 0 0 1 14 0" />
       <path d="M3.5 8a6.5 6.5 0 0 1 9 0" />
       <path d="M6 10.5a3 3 0 0 1 4 0" />
@@ -38,7 +38,7 @@ function WifiIcon() {
 
 function SeaIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M1 9 Q4 6.5 7 9 Q10 11.5 13 9 Q14.5 7.75 16 9" />
       <path d="M1 12.5 Q4 10 7 12.5 Q10 15 13 12.5 Q14.5 11.25 16 12.5" />
     </svg>
@@ -47,7 +47,7 @@ function SeaIcon() {
 
 function ParkingIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="1" y="1" width="14" height="14" rx="7" />
       <path d="M6 4.5h3.5a2.5 2.5 0 0 1 0 5H6V4.5z" />
       <line x1="6" y1="9.5" x2="6" y2="12.5" />
@@ -76,7 +76,7 @@ type Apartment = {
   subtitle: string;
   badge: BadgeType;
   price: number;
-  imageSrc: string;
+  images: string[];
   features: Feature[];
 };
 
@@ -87,7 +87,7 @@ const apartments: Apartment[] = [
     subtitle: "Classic Comfort",
     badge: "Standard",
     price: 85,
-    imageSrc: "/assets/apt1-1.jpg",
+    images: ["/assets/apt1-1.jpg", "/assets/apt1-2.jpg"],
     features: [
       { key: "area",    label: "32 m²" },
       { key: "guests",  label: "2+1" },
@@ -100,7 +100,7 @@ const apartments: Apartment[] = [
     subtitle: "Adriatic Vista",
     badge: "Balkon + pogled",
     price: 110,
-    imageSrc: "/assets/apt2-1.jpg",
+    images: ["/assets/apt2-1.jpg", "/assets/apt2-2.jpg"],
     features: [
       { key: "area",    label: "40 m²" },
       { key: "guests",  label: "2" },
@@ -114,7 +114,7 @@ const apartments: Apartment[] = [
     subtitle: "Coastal Hideaway",
     badge: "Standard",
     price: 80,
-    imageSrc: "/assets/apt3-1.jpg",
+    images: ["/assets/apt3-1.jpg"],
     features: [
       { key: "area",    label: "30 m²" },
       { key: "guests",  label: "2" },
@@ -128,7 +128,7 @@ const apartments: Apartment[] = [
     subtitle: "Premium Panorama",
     badge: "Balkon + pogled",
     price: 125,
-    imageSrc: "/assets/apt4-1.jpg",
+    images: ["/assets/apt4-1.jpg", "/assets/apt4-2.jpg"],
     features: [
       { key: "area",    label: "45 m²" },
       { key: "guests",  label: "4+1" },
@@ -159,54 +159,71 @@ function ApartmentCard({ apt, delay }: { apt: Apartment; delay: number }) {
 
   return (
     <article
-      className="reveal group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--color-gold)]"
+      className="reveal group flex flex-col overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-black/[0.04] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:ring-[var(--color-gold)]/50"
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div className="relative aspect-[4/3] bg-gray-200 overflow-hidden">
+      {/* Image with overlaid identity */}
+      <div className="relative aspect-[16/10] overflow-hidden bg-gray-200">
         <Image
-          src={apt.imageSrc}
+          src={apt.images[0]}
           alt={apt.name}
           fill
           sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-          onError={() => {}}
+          className="object-cover transition-all duration-700 group-hover:scale-[1.05]"
         />
+        {apt.images[1] && (
+          <Image
+            src={apt.images[1]}
+            alt=""
+            aria-hidden="true"
+            fill
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+          />
+        )}
+
+        {/* Scrim for legible overlay text */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
+
+        {/* Badge */}
         <span
-          className="absolute left-3 top-3 rounded-full px-3 py-1 text-[11px] font-medium text-white"
+          className="absolute left-4 top-4 rounded-full px-3 py-1 text-[11px] font-medium text-white shadow-sm"
           style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
         >
           {badgeLabel}
         </span>
-        <span
-          className="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[12px] font-medium"
-          style={{ color: "var(--color-navy)", fontFamily: "var(--font-montserrat), sans-serif" }}
-        >
-          {t.apartments.from} {apt.price} €
-        </span>
+
+        {/* Name + subtitle on image */}
+        <div className="absolute inset-x-0 bottom-0 p-5">
+          <p
+            className="mb-1 text-[11px] uppercase tracking-[0.2em] text-white/80"
+            style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+          >
+            {apt.subtitle}
+          </p>
+          <h3
+            className="text-[26px] font-normal leading-tight text-white"
+            style={{ fontFamily: "var(--font-playfair), serif" }}
+          >
+            {apt.name}
+          </h3>
+        </div>
       </div>
 
+      {/* Content */}
       <div className="flex flex-1 flex-col p-6">
-        <h3
-          className="mb-1 text-[22px] font-normal leading-tight"
-          style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
-        >
-          {apt.name}
-        </h3>
-        <p
-          className="mb-4 text-[12px] uppercase tracking-[0.15em]"
-          style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-gold)" }}
-        >
-          {apt.subtitle}
-        </p>
-
-        <ul className="mb-5 flex flex-wrap gap-x-4 gap-y-2.5">
+        <ul className="mb-6 flex flex-wrap gap-2">
           {apt.features.map((f) => (
             <li
               key={f.key}
-              className="flex items-center gap-1.5 text-[13px]"
-              style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+              className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-medium"
+              style={{
+                fontFamily: "var(--font-montserrat), sans-serif",
+                backgroundColor: "var(--color-sand)",
+                color: "var(--color-navy)",
+              }}
             >
-              <span style={{ color: "var(--color-navy)", opacity: 0.6 }}>
+              <span style={{ color: "var(--color-azure)" }}>
                 {featureIcons[f.key]}
               </span>
               {getFeatureLabel(f.key, f.label)}
@@ -214,20 +231,33 @@ function ApartmentCard({ apt, delay }: { apt: Apartment; delay: number }) {
           ))}
         </ul>
 
-        <hr className="mb-5 border-gray-100" />
-
-        <div className="mt-auto flex items-center justify-between gap-4">
-          <span
-            className="text-[15px] font-medium"
-            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}
-          >
-            {t.apartments.from} {apt.price} €{" "}
-            <span className="font-normal text-[var(--color-text-muted)]">{t.apartments.perNight}</span>
-          </span>
+        <div className="mt-auto flex items-end justify-between gap-4 border-t border-gray-100 pt-5">
+          <div className="flex flex-col">
+            <span
+              className="text-[11px] uppercase tracking-[0.15em]"
+              style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+            >
+              {t.apartments.from}
+            </span>
+            <span className="flex items-baseline gap-1.5">
+              <span
+                className="text-[28px] leading-none"
+                style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)", fontVariantNumeric: "tabular-nums" }}
+              >
+                {apt.price} €
+              </span>
+              <span
+                className="text-[13px]"
+                style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+              >
+                {t.apartments.perNight}
+              </span>
+            </span>
+          </div>
 
           <a
             href="#contact"
-            className="apt-cta cursor-pointer rounded-full border px-5 py-2 text-[13px] font-medium transition-colors duration-200"
+            className="apt-cta cursor-pointer rounded-full border px-5 py-2.5 text-center transition-colors duration-200"
             style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
           >
             {t.apartments.cta}

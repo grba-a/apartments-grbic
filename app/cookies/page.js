@@ -1,7 +1,8 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Cookie Policy | Apartments Grbić",
+  title: "Cookie Policy",
+  alternates: { canonical: "/cookies" },
   description: "Information about the use of cookies on the Apartments Grbić website.",
 };
 

@@ -20,7 +20,8 @@ export default function CookieBanner() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white shadow-lg">
-      <div className="flex flex-col items-center gap-6 px-6 py-5 text-center md:flex-row md:items-center md:justify-between md:px-12 md:text-left">
+      {/* md:pr-28 keeps the buttons clear of the floating WhatsApp button at bottom-right */}
+      <div className="flex flex-col items-center gap-6 px-6 py-5 text-center md:flex-row md:items-center md:justify-between md:pl-12 md:pr-28 md:text-left">
 
         {/* Text */}
         <div className="max-w-[600px]">

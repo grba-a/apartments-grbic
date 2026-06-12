@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Blog — Guides & Travel Tips | Apartments Grbić",
+  title: "Blog — Guides & Travel Tips",
+  alternates: { canonical: "/blog" },
   description:
     "Travel guides and tips for your stay near Dubrovnik — day trips, beaches, getting around, and local recommendations from the Grbić family.",
 };

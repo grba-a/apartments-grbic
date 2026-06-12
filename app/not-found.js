@@ -2,7 +2,7 @@ import Link from "next/link";
 import NavbarLightTheme from "@/src/components/NavbarLightTheme";
 
 export const metadata = {
-  title: "Page Not Found | Apartments Grbić",
+  title: "Page Not Found",
 };
 
 export default function NotFound() {
@@ -24,17 +24,17 @@ export default function NotFound() {
         404
       </p>
 
-      {/* Logo */}
-      <div className="mt-[-32px] mb-6 flex items-baseline gap-1.5">
+      {/* Logo — same lockup as the navbar */}
+      <div className="mt-[-32px] mb-6 flex items-baseline gap-1">
         <span
-          className="text-lg leading-none"
-          style={{ fontFamily: "var(--font-montserrat), sans-serif", fontWeight: 500, color: "var(--color-navy)" }}
+          className="text-[15px] font-light uppercase tracking-[0.2em] leading-none"
+          style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}
         >
           Apartments
         </span>
         <span
-          className="text-xl leading-none"
-          style={{ fontFamily: "var(--font-playfair), serif", fontStyle: "italic", fontWeight: 600, color: "var(--color-gold)" }}
+          className="text-[20px] leading-none italic font-semibold"
+          style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-gold)" }}
         >
           Grbić
         </span>
@@ -55,24 +55,14 @@ export default function NotFound() {
         Head back to the homepage to find everything you need.
       </p>
 
-      <div className="flex flex-wrap justify-center gap-4">
-        <Link
-          href="/"
-          className="rounded-full px-8 py-4 text-[11px] font-medium uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-85"
-          style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
-        >
+      <div className="flex flex-wrap justify-center gap-3">
+        <Link href="/" className="btn-primary">
           Back to Home
+          <span className="btn-arrow">→</span>
         </Link>
-        <Link
-          href="/#contact"
-          className="rounded-full border px-8 py-4 text-[11px] font-medium uppercase tracking-[0.18em] transition-opacity hover:opacity-70"
-          style={{
-            borderColor: "var(--color-navy)",
-            color: "var(--color-navy)",
-            fontFamily: "var(--font-montserrat), sans-serif",
-          }}
-        >
+        <Link href="/#contact" className="btn-navy">
           Contact Us
+          <span className="btn-arrow">→</span>
         </Link>
       </div>
     </main>

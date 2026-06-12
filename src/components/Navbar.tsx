@@ -10,6 +10,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [lightBg, setLightBg] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -18,6 +19,29 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Scroll-spy: highlight the nav link of the section currently in view
+  useEffect(() => {
+    if (pathname !== "/") { setActiveSection(null); return; }
+    const ids = t.nav.links
+      .filter(({ href }) => href.startsWith("#"))
+      .map(({ href }) => href.slice(1));
+    const sections = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: "-35% 0px -55% 0px" }
+    );
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [pathname, t.nav.links]);
 
   useEffect(() => {
     const check = () => setLightBg("navLight" in document.body.dataset);
@@ -83,21 +107,28 @@ export default function Navbar() {
 
           {/* Desktop nav links */}
           <ul className="hidden md:flex items-center gap-8">
-            {t.nav.links.map(({ label, href }) => (
-              <li key={href}>
-                <a
-                  href={getHref(href)}
-                  onClick={(e) => handleSectionClick(e, href)}
-                  className={`relative text-[11px] font-medium uppercase tracking-[0.18em] transition-colors duration-300 ${textColor}
-                    after:absolute after:bottom-[-3px] after:left-0 after:h-px after:w-full
-                    after:origin-left after:scale-x-0 after:bg-[var(--color-gold)]
-                    after:transition-transform after:duration-300 hover:after:scale-x-100`}
-                  style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
-                >
-                  {label}
-                </a>
-              </li>
-            ))}
+            {t.nav.links.map(({ label, href }) => {
+              const isActive = href.startsWith("#")
+                ? activeSection === href.slice(1)
+                : pathname.startsWith(href);
+              return (
+                <li key={href}>
+                  <a
+                    href={getHref(href)}
+                    onClick={(e) => handleSectionClick(e, href)}
+                    aria-current={isActive ? "true" : undefined}
+                    className={`relative text-[11px] font-medium uppercase tracking-[0.18em] transition-colors duration-300 ${isActive ? "text-[var(--color-gold)]" : textColor}
+                      after:absolute after:bottom-[-3px] after:left-0 after:h-px after:w-full
+                      after:origin-left after:bg-[var(--color-gold)]
+                      after:transition-transform after:duration-300 hover:after:scale-x-100
+                      ${isActive ? "after:scale-x-100" : "after:scale-x-0"}`}
+                    style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+                  >
+                    {label}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Desktop right */}

@@ -1,7 +1,8 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Privacy Policy | Apartments Grbić",
+  title: "Privacy Policy",
+  alternates: { canonical: "/privacy" },
   description: "Privacy policy of Apartments Grbić — how we collect and use your personal data.",
 };
 

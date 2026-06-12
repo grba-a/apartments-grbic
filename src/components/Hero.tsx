@@ -3,53 +3,35 @@
 import Image from "next/image";
 import { useLang } from "@/src/i18n/LangContext";
 
-function Star() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
-      <path
-        d="M6 1l1.35 2.73L10.5 4.22l-2.25 2.19.53 3.1L6 7.96l-2.78 1.55.53-3.1L1.5 4.22l3.15-.49L6 1z"
-        fill="var(--color-gold)"
-      />
-    </svg>
-  );
-}
-
-const statBorders = [
-  "border-b border-r border-white/15 md:border-b-0",
-  "border-b border-white/15 md:border-b-0 md:border-r",
-  "border-r border-white/15",
-  "",
-];
-
 export default function Hero() {
   const { t } = useLang();
-
-  const stats = [
-    { value: "8.7", suffix: <Star />, label: t.hero.bookingLabel, href: "https://www.booking.com/hotel/hr/apartmani-grbia.hr.html" },
-    { value: "4.3", suffix: <Star />, label: t.hero.googleLabel,  href: "https://share.google/P6ZK6srMHdU72N4fk" },
-    { value: "4.000+", suffix: null, label: t.hero.guestsLabel,    href: null },
-    { value: "20+",    suffix: null, label: t.hero.experienceLabel, href: null },
-  ];
 
   return (
     <section id="top" className="relative flex min-h-screen flex-col overflow-hidden">
 
       <div className="absolute inset-0 bg-gradient-to-b from-[#0B3D52] to-[#1A6B8A]" />
 
-      <Image
-        src="/assets/hero-bg.jpg"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center"
+      <div className="hero-zoom absolute inset-0">
+        <Image
+          src="/assets/hero-bg.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+          aria-hidden="true"
+        />
+      </div>
+
+      <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/65" />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.35) 100%)" }}
         aria-hidden="true"
       />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/65" />
-
       {/* Main content */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-36 pt-28 text-center text-white">
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-28 pt-28 text-center text-white">
 
         {/* Location badge */}
         <div
@@ -106,7 +88,7 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <div
-        className="absolute bottom-[72px] left-1/2 z-10 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 md:block"
         style={{ animation: "fadeInUp 0.7s ease-out both", animationDelay: "520ms" }}
       >
         <a
@@ -126,42 +108,6 @@ export default function Hero() {
         </a>
       </div>
 
-      {/* Stats bar */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/10 bg-black/35 backdrop-blur-md">
-        <div className="mx-auto max-w-5xl px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4">
-            {stats.map((stat, i) => {
-              const inner = (
-                <div className="flex flex-col items-center justify-center gap-1.5 py-5 px-3">
-                  <div className="flex items-center gap-1.5">
-                    <span
-                      className="text-[18px] font-normal leading-none text-white"
-                      style={{ fontFamily: "var(--font-playfair), serif" }}
-                    >
-                      {stat.value}
-                    </span>
-                    {stat.suffix}
-                  </div>
-                  <span
-                    className="text-[10px] uppercase tracking-[0.15em] text-white/50"
-                    style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
-                  >
-                    {stat.label}
-                  </span>
-                </div>
-              );
-              const cellClass = `${statBorders[i]} transition-colors duration-200`;
-              return stat.href ? (
-                <a key={i} href={stat.href} target="_blank" rel="noopener noreferrer" className={`${cellClass} hover:bg-white/5`}>
-                  {inner}
-                </a>
-              ) : (
-                <div key={i} className={cellClass}>{inner}</div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
     </section>
   );
 }

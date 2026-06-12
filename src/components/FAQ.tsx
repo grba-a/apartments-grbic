@@ -9,7 +9,7 @@ export default function FAQ() {
   const toggle = (i: number) => setOpenIndex((prev) => (prev === i ? null : i));
 
   return (
-    <section id="faq" className="py-24" style={{ backgroundColor: "var(--color-sand)" }}>
+    <section id="faq" className="bg-white py-24">
       <div className="mx-auto max-w-[1240px] px-6">
 
         <div className="reveal flex flex-col items-center text-center">
@@ -40,8 +40,8 @@ export default function FAQ() {
             return (
               <div
                 key={i}
-                className="mb-3 overflow-hidden rounded-2xl border bg-white transition-colors duration-200"
-                style={{ borderColor: isOpen ? "var(--color-gold)" : "#F3F4F6" }}
+                className="mb-3 overflow-hidden rounded-2xl border bg-white shadow-sm transition-all duration-200"
+                style={{ borderColor: isOpen ? "var(--color-gold)" : "#E5E7EB" }}
               >
                 <button
                   className="flex w-full cursor-pointer items-center justify-between px-8 py-5 text-left"

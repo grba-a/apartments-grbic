@@ -112,6 +112,10 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // No backend yet — open the visitor's email client with the enquiry prefilled
+    const subject = encodeURIComponent(`${t.contact.h2} — ${fields.name}`);
+    const body = encodeURIComponent(`${fields.message}\n\n${fields.name}\n${fields.email}`);
+    window.location.href = `mailto:apt.grbic.mlini@gmail.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 
@@ -154,28 +158,32 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
-                <Field label={t.contact.nameLabel}>
-                  <input
-                    type="text"
-                    required
-                    value={fields.name}
-                    onChange={set("name")}
-                    placeholder={t.contact.namePlaceholder}
-                    className={inputClass}
-                    style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
-                  />
-                </Field>
-                <Field label={t.contact.emailLabel}>
-                  <input
-                    type="email"
-                    required
-                    value={fields.email}
-                    onChange={set("email")}
-                    placeholder={t.contact.emailPlaceholder}
-                    className={inputClass}
-                    style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
-                  />
-                </Field>
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <Field label={t.contact.nameLabel}>
+                    <input
+                      type="text"
+                      required
+                      autoComplete="name"
+                      value={fields.name}
+                      onChange={set("name")}
+                      placeholder={t.contact.namePlaceholder}
+                      className={inputClass}
+                      style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+                    />
+                  </Field>
+                  <Field label={t.contact.emailLabel}>
+                    <input
+                      type="email"
+                      required
+                      autoComplete="email"
+                      value={fields.email}
+                      onChange={set("email")}
+                      placeholder={t.contact.emailPlaceholder}
+                      className={inputClass}
+                      style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+                    />
+                  </Field>
+                </div>
                 <Field label={t.contact.messageLabel}>
                   <textarea
                     rows={6}
@@ -187,12 +195,9 @@ export default function Contact() {
                     style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
                   />
                 </Field>
-                <button
-                  type="submit"
-                  className="cursor-pointer mt-1 w-full rounded-full py-4 text-[11px] font-medium uppercase tracking-[0.2em] text-white transition-opacity duration-200 hover:opacity-85"
-                  style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
-                >
+                <button type="submit" className="btn-primary mt-1 w-full justify-center py-4">
                   {t.contact.submit}
+                  <span className="btn-arrow">→</span>
                 </button>
               </form>
             )}
@@ -265,7 +270,10 @@ export default function Contact() {
               ))}
             </div>
 
-            <div className="mt-8 rounded-xl p-4" style={{ backgroundColor: "#EFF6FF" }}>
+            <div
+              className="mt-8 rounded-xl border p-4"
+              style={{ backgroundColor: "var(--color-sand)", borderColor: "var(--color-gold)", borderWidth: "1px" }}
+            >
               <p className="text-[14px]" style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-navy)" }}>
                 {t.contact.responseTime}
               </p>

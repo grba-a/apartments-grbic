@@ -183,9 +183,6 @@ export default function Reviews() {
   // Distance between card centers in the 3D scene
   const OFFSET = 308;
 
-  const prev = () => setCurrent((c) => Math.max(0, c - 1));
-  const next = () => setCurrent((c) => Math.min(reviews.length - 1, c + 1));
-
   return (
     <section id="reviews" className="py-24" style={{ backgroundColor: "var(--color-sand)" }}>
       <div className="mx-auto max-w-[1240px] px-6">
@@ -312,21 +309,15 @@ export default function Reviews() {
           </div>
         </div>
 
-        {/* ── Mobile: vertical snap scroll (<md) ────────────────────────────── */}
+        {/* ── Mobile: horizontal snap carousel (<md) ────────────────────────── */}
         <div
-          className="md:hidden overflow-y-scroll"
-          style={{
-            height: "72vh",
-            scrollSnapType: "y mandatory",
-            WebkitOverflowScrolling: "touch",
-            scrollbarWidth: "none",
-          } as React.CSSProperties}
+          className="no-scrollbar -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 md:hidden"
+          style={{ WebkitOverflowScrolling: "touch" }}
         >
           {reviews.map((r) => (
             <div
               key={r.name}
-              className="px-1 pb-4"
-              style={{ scrollSnapAlign: "start" }}
+              className="w-[86%] shrink-0 snap-center"
             >
               <ReviewCard r={r} t={t} />
             </div>

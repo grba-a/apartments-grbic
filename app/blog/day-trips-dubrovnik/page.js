@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "The Best Day Trips from Dubrovnik | Apartments Grbić",
+  title: "The Best Day Trips from Dubrovnik",
+  alternates: { canonical: "/blog/day-trips-dubrovnik" },
   description:
     "Discover the best day trips from Dubrovnik — Korčula, Mljet, Kotor, Mostar and more. Tips for planning excursions with your base in Mlini.",
 };
