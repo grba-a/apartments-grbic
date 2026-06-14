@@ -133,10 +133,24 @@ export default function Navbar() {
 
           {/* Desktop right */}
           <div className="hidden md:flex items-center gap-5">
+            <style>{`
+              .nav-book-btn {
+                box-shadow: 3px 3px 0 var(--color-navy);
+                transition: transform 150ms ease, box-shadow 150ms ease;
+              }
+              .nav-book-btn:hover {
+                transform: translate(2px, 2px);
+                box-shadow: 1px 1px 0 var(--color-navy);
+              }
+              .nav-book-btn:active {
+                transform: translate(3px, 3px);
+                box-shadow: none;
+              }
+            `}</style>
             <a
               href={getHref("#contact")}
               onClick={(e) => handleSectionClick(e, "#contact")}
-              className="rounded-full px-6 py-2.5 text-[11px] font-medium uppercase tracking-[0.15em] text-white transition-opacity duration-200 hover:opacity-85"
+              className="nav-book-btn rounded-full px-6 py-2.5 text-[11px] font-medium uppercase tracking-[0.15em] text-white"
               style={{ backgroundColor: "var(--color-gold)", fontFamily: "var(--font-montserrat), sans-serif" }}
             >
               {t.nav.cta}

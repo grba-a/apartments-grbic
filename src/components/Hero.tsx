@@ -76,11 +76,9 @@ export default function Hero() {
         >
           <a href="#contact" className="btn-primary">
             {t.hero.cta1}
-            <span className="btn-arrow">→</span>
           </a>
           <a href="#apartments" className="btn-ghost-light">
             {t.hero.cta2}
-            <span className="btn-arrow">→</span>
           </a>
         </div>
 

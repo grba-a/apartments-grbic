@@ -75,7 +75,6 @@ type Apartment = {
   name: string;
   subtitle: string;
   badge: BadgeType;
-  price: number;
   images: string[];
   features: Feature[];
 };
@@ -86,7 +85,6 @@ const apartments: Apartment[] = [
     name: "Apartment 1",
     subtitle: "Classic Comfort",
     badge: "Standard",
-    price: 85,
     images: ["/assets/apt1-1.jpg", "/assets/apt1-2.jpg"],
     features: [
       { key: "area",    label: "32 m²" },
@@ -99,7 +97,6 @@ const apartments: Apartment[] = [
     name: "Apartment 2",
     subtitle: "Adriatic Vista",
     badge: "Balkon + pogled",
-    price: 110,
     images: ["/assets/apt2-1.jpg", "/assets/apt2-2.jpg"],
     features: [
       { key: "area",    label: "40 m²" },
@@ -113,7 +110,6 @@ const apartments: Apartment[] = [
     name: "Apartment 3",
     subtitle: "Coastal Hideaway",
     badge: "Standard",
-    price: 80,
     images: ["/assets/apt3-1.jpg"],
     features: [
       { key: "area",    label: "30 m²" },
@@ -127,7 +123,6 @@ const apartments: Apartment[] = [
     name: "Apartment 4",
     subtitle: "Premium Panorama",
     badge: "Balkon + pogled",
-    price: 125,
     images: ["/assets/apt4-1.jpg", "/assets/apt4-2.jpg"],
     features: [
       { key: "area",    label: "45 m²" },
@@ -158,8 +153,9 @@ function ApartmentCard({ apt, delay }: { apt: Apartment; delay: number }) {
   };
 
   return (
-    <article
-      className="reveal group flex flex-col overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-black/[0.04] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:ring-[var(--color-gold)]/50"
+    <a
+      href="#contact"
+      className="reveal group flex flex-col overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-black/[0.04] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:ring-[var(--color-gold)]/50 cursor-pointer"
       style={{ transitionDelay: `${delay}ms` }}
     >
       {/* Image with overlaid identity */}
@@ -231,40 +227,22 @@ function ApartmentCard({ apt, delay }: { apt: Apartment; delay: number }) {
           ))}
         </ul>
 
-        <div className="mt-auto flex items-end justify-between gap-4 border-t border-gray-100 pt-5">
-          <div className="flex flex-col">
-            <span
-              className="text-[11px] uppercase tracking-[0.15em]"
-              style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
-            >
-              {t.apartments.from}
-            </span>
-            <span className="flex items-baseline gap-1.5">
-              <span
-                className="text-[28px] leading-none"
-                style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)", fontVariantNumeric: "tabular-nums" }}
-              >
-                {apt.price} €
-              </span>
-              <span
-                className="text-[13px]"
-                style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
-              >
-                {t.apartments.perNight}
-              </span>
-            </span>
-          </div>
-
-          <a
-            href="#contact"
-            className="apt-cta cursor-pointer rounded-full border px-5 py-2.5 text-center transition-colors duration-200"
-            style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+        <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4">
+          <span
+            className="text-[11px] uppercase tracking-[0.15em] transition-colors duration-200 group-hover:text-[var(--color-gold)]"
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
           >
             {t.apartments.cta}
-          </a>
+          </span>
+          <span
+            className="text-[16px] transition-all duration-200 group-hover:translate-x-1"
+            style={{ color: "var(--color-gold)" }}
+          >
+            →
+          </span>
         </div>
       </div>
-    </article>
+    </a>
   );
 }
 

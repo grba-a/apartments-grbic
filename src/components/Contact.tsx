@@ -105,18 +105,33 @@ export default function Contact() {
   const { t } = useLang();
   const [fields, setFields] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const set = (key: keyof typeof fields) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       setFields((prev) => ({ ...prev, [key]: e.target.value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // No backend yet — open the visitor's email client with the enquiry prefilled
-    const subject = encodeURIComponent(`${t.contact.h2} — ${fields.name}`);
-    const body = encodeURIComponent(`${fields.message}\n\n${fields.name}\n${fields.email}`);
-    window.location.href = `mailto:apt.grbic.mlini@gmail.com?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("https://formspree.io/f/xjgdjorr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(fields),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError(t.contact.errorMessage);
+      }
+    } catch {
+      setError(t.contact.errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -195,9 +210,13 @@ export default function Contact() {
                     style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
                   />
                 </Field>
-                <button type="submit" className="btn-primary mt-1 w-full justify-center py-4">
-                  {t.contact.submit}
-                  <span className="btn-arrow">→</span>
+                {error && (
+                  <p className="text-[13px] text-red-500" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
+                    {error}
+                  </p>
+                )}
+                <button type="submit" disabled={loading} className="btn-primary mt-1 w-full justify-center py-4 disabled:opacity-60">
+                  {loading ? "..." : t.contact.submit}
                 </button>
               </form>
             )}
