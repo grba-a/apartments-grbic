@@ -126,7 +126,7 @@ const apartments: Apartment[] = [
     images: ["/assets/apt4-1.jpg", "/assets/apt4-2.jpg"],
     features: [
       { key: "area",    label: "45 m²" },
-      { key: "guests",  label: "4+1" },
+      { key: "guests",  label: "4" },
       { key: "wifi",    label: "Wi-Fi" },
       { key: "sea",     label: "" },
     ],
