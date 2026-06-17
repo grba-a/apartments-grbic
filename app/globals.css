@@ -13,6 +13,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 /* Fixed navbar shouldn't cover anchored sections */
@@ -35,7 +36,7 @@ body {
   font-family: var(--font-montserrat), sans-serif;
   background: #ffffff;
   color: var(--color-text);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4 {
