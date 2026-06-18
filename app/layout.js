@@ -5,6 +5,7 @@ import Footer from "@/src/components/Footer";
 import CookieBanner from "@/src/components/CookieBanner";
 import RevealObserver from "@/src/components/RevealObserver";
 import WhatsAppButton from "@/src/components/WhatsAppButton";
+import Analytics from "@/src/components/Analytics";
 import { LangProvider } from "@/src/i18n/LangContext";
 
 const playfair = Playfair_Display({
@@ -196,6 +197,7 @@ export default function RootLayout({ children }) {
           <CookieBanner />
           <WhatsAppButton />
           <RevealObserver />
+          <Analytics />
         </LangProvider>
       </body>
     </html>
