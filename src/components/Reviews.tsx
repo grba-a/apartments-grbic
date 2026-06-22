@@ -264,7 +264,7 @@ function ReviewRow({
         {loop.map((r, i) => (
           <div
             key={`${r.platform}-${r.name}-${i}`}
-            className={`w-[300px] shrink-0 pr-5${i >= items.length ? " reviews-marquee-dup" : ""}`}
+            className={`w-[316px] shrink-0 pr-9${i >= items.length ? " reviews-marquee-dup" : ""}`}
             aria-hidden={i >= items.length}
           >
             <ReviewCard r={r} t={t} />
