@@ -7,7 +7,7 @@ export default function Hero() {
   const { t } = useLang();
 
   return (
-    <section id="top" className="relative flex min-h-screen flex-col overflow-hidden">
+    <section id="top" className="relative flex min-h-[100lvh] flex-col overflow-hidden md:min-h-[calc(100vh-48px)]">
 
       <div className="absolute inset-0 bg-gradient-to-b from-[#0B3D52] to-[#1A6B8A]" />
 
@@ -80,6 +80,26 @@ export default function Hero() {
           <a href="#apartments" className="btn-ghost-light">
             {t.hero.cta2}
           </a>
+        </div>
+
+        {/* Trust row (desktop only — hero stays clean on mobile) */}
+        <div
+          className="mt-7 hidden items-center gap-2 md:flex"
+          style={{ animation: "fadeInUp 0.7s ease-out both", animationDelay: "480ms" }}
+        >
+          <svg width="13" height="13" viewBox="0 0 12 12" aria-hidden="true">
+            <path
+              d="M6 1l1.35 2.73L10.5 4.22l-2.25 2.19.53 3.1L6 7.96l-2.78 1.55.53-3.1L1.5 4.22l3.15-.49L6 1z"
+              fill="var(--color-gold)"
+            />
+          </svg>
+          <span
+            className="text-[12px] tracking-wide text-white/75"
+            style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+          >
+            <strong className="font-semibold text-white">8.7</strong> on Booking.com
+            <span className="mx-1.5 text-white/40">·</span>290+ guest reviews
+          </span>
         </div>
 
       </div>

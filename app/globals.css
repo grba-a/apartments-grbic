@@ -150,6 +150,33 @@ h1, h2, h3, h4 {
   .gallery-fade { animation: none; }
 }
 
+/* ── TrustBar infinite marquee ────────────────────────────────── */
+@keyframes trustMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.trust-marquee {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  animation: trustMarquee 38s linear infinite;
+  will-change: transform;
+}
+.trust-marquee:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .trust-marquee {
+    animation: none;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .trust-marquee-dup {
+    display: none;
+  }
+}
+
 /* ── Hide scrollbar on snap carousels ─────────────────────────── */
 .no-scrollbar {
   scrollbar-width: none;

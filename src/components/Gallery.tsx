@@ -2,65 +2,15 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useLang } from "@/src/i18n/LangContext";
-
-type AspectRatio = "4/3" | "3/4" | "1/1";
-type GalleryItem = { src: string; alt: string };
-
-// ── Dodaj nove slike ovdje — svaki tab ima vlastiti popis fotografija ─────────
-const photoSets: GalleryItem[][] = [
-  // Sve / All
-  [
-    { src: "/assets/gallery1.jpg", alt: "Gallery 1" },
-    { src: "/assets/gallery2.jpg", alt: "Gallery 2" },
-    { src: "/assets/gallery3.jpg", alt: "Gallery 3" },
-    { src: "/assets/gallery4.jpg", alt: "Gallery 4" },
-    { src: "/assets/gallery5.jpg", alt: "Gallery 5" },
-    { src: "/assets/gallery6.jpg", alt: "Gallery 6" },
-  ],
-  // Apartman 1
-  [
-    { src: "/assets/apt1-1.jpg", alt: "Apartment 1" },
-    { src: "/assets/apt1-2.jpg", alt: "Apartment 1" },
-    { src: "/assets/apt1-3.jpg", alt: "Apartment 1" },
-  ],
-  // Apartman 2
-  [
-    { src: "/assets/apt2-1.jpg", alt: "Apartment 2" },
-    { src: "/assets/apt2-2.jpg", alt: "Apartment 2" },
-    { src: "/assets/apt2-3.jpg", alt: "Apartment 2" },
-    { src: "/assets/apt2-4.jpg", alt: "Apartment 2" },
-  ],
-  // Apartman 3
-  [
-    { src: "/assets/apt3-1.jpg", alt: "Apartment 3" },
-  ],
-  // Apartman 4
-  [
-    { src: "/assets/apt4-1.jpg", alt: "Apartment 4" },
-    { src: "/assets/apt4-2.jpg", alt: "Apartment 4" },
-    { src: "/assets/apt4-3.jpg", alt: "Apartment 4" },
-    { src: "/assets/apt4-4.jpg", alt: "Apartment 4" },
-  ],
-];
-
-// Pattern se ponavlja: landscape → portrait → square → landscape → ...
-const ASPECT_PATTERN: AspectRatio[] = ["4/3", "3/4", "1/1"];
-
-const aspectClasses: Record<AspectRatio, string> = {
-  "4/3": "aspect-[4/3]",
-  "3/4": "aspect-[3/4]",
-  "1/1": "aspect-square",
-};
+import { photoSets } from "@/src/components/GalleryFull";
 
 export default function Gallery() {
   const { t } = useLang();
-  // First tab comes from translations; the rest match the apartment names
-  const tabs = [t.gallery.tabAll, "Apartment 1", "Apartment 2", "Apartment 3", "Apartment 4"];
-  const [activeIdx, setActiveIdx] = useState(0);
+  // Highlights = the curated "All" set (6 images)
+  const items = photoSets[0];
   const [lightbox, setLightbox] = useState<number | null>(null);
-
-  const items = photoSets[activeIdx];
 
   const close = useCallback(() => setLightbox(null), []);
   const prev  = useCallback(() => setLightbox((i) => (i === null ? null : (i - 1 + items.length) % items.length)), [items.length]);
@@ -105,58 +55,36 @@ export default function Gallery() {
             </p>
           </div>
 
-          {/* Filter tabs */}
-          <div className="mt-10 mb-8 flex flex-wrap items-center justify-center gap-2" role="tablist">
-            {tabs.map((tab, idx) => {
-              const isActive = activeIdx === idx;
-              return (
+          {/* Highlights carousel */}
+          <div className="relative mt-12">
+            <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2">
+              {items.map((item, i) => (
                 <button
-                  key={tab}
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => { setActiveIdx(idx); setLightbox(null); }}
-                  className="cursor-pointer rounded-full border px-5 py-2 text-[13px] font-medium transition-all duration-200 hover:-translate-y-px"
-                  style={{
-                    fontFamily: "var(--font-montserrat), sans-serif",
-                    backgroundColor: isActive ? "var(--color-gold)" : "transparent",
-                    borderColor: "var(--color-gold)",
-                    color: isActive ? "#ffffff" : "var(--color-gold)",
-                  }}
+                  key={item.src}
+                  data-card
+                  type="button"
+                  onClick={() => setLightbox(i)}
+                  className="group relative aspect-[4/3] w-[82%] shrink-0 snap-center cursor-pointer overflow-hidden rounded-xl bg-gray-200 sm:w-[60%] lg:w-[calc((100%-2rem)/3)]"
                 >
-                  {tab}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Grid — keyed by tab so the fade-in replays on filter change */}
-          <div key={activeIdx} className="columns-2 gap-2 md:columns-3 lg:gap-4">
-            {items.map((item, i) => (
-              <div
-                key={item.src}
-                className="gallery-fade group relative mb-2 lg:mb-4 cursor-pointer overflow-hidden rounded-lg lg:rounded-xl bg-gray-200 break-inside-avoid"
-                style={{ animationDelay: `${i * 60}ms` }}
-                onClick={() => setLightbox(i)}
-              >
-                <div className={`relative ${aspectClasses[ASPECT_PATTERN[i % ASPECT_PATTERN.length]]}`}>
                   <Image
                     src={item.src}
                     alt={item.alt}
                     fill
-                    sizes="(max-width: 768px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    sizes="(max-width: 640px) 82vw, (max-width: 1024px) 60vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                   />
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/30">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <circle cx="14" cy="14" r="8" />
-                    <line x1="20" y1="20" x2="28" y2="28" />
-                    <line x1="11" y1="14" x2="17" y2="14" />
-                    <line x1="14" y1="11" x2="14" y2="17" />
-                  </svg>
-                </div>
-              </div>
-            ))}
+                  <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* View full gallery CTA */}
+          <div className="mt-10 flex justify-center">
+            <Link href="/gallery" className="btn-navy btn-lg">
+              {t.gallery.viewMore}
+              <span className="btn-arrow">→</span>
+            </Link>
           </div>
 
         </div>
@@ -177,24 +105,20 @@ export default function Gallery() {
               <line x1="26" y1="6" x2="6" y2="26" />
             </svg>
           </button>
-          {items.length > 1 && (
-            <button className="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer p-2 text-white transition-opacity hover:opacity-70" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label={t.gallery.prev}>
-              <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="25,8 13,20 25,32" />
-              </svg>
-            </button>
-          )}
+          <button className="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer p-2 text-white transition-opacity hover:opacity-70" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label={t.gallery.prev}>
+            <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="25,8 13,20 25,32" />
+            </svg>
+          </button>
           <div className="relative flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={items[lightbox].src} alt={items[lightbox].alt} className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain shadow-2xl" />
           </div>
-          {items.length > 1 && (
-            <button className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer p-2 text-white transition-opacity hover:opacity-70" onClick={(e) => { e.stopPropagation(); next(); }} aria-label={t.gallery.next}>
-              <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15,8 27,20 15,32" />
-              </svg>
-            </button>
-          )}
+          <button className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer p-2 text-white transition-opacity hover:opacity-70" onClick={(e) => { e.stopPropagation(); next(); }} aria-label={t.gallery.next}>
+            <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15,8 27,20 15,32" />
+            </svg>
+          </button>
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[14px] text-white" style={{ fontFamily: "var(--font-montserrat), sans-serif", fontVariantNumeric: "tabular-nums" }}>
             {lightbox + 1} / {items.length}
           </div>

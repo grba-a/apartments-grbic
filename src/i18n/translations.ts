@@ -9,7 +9,7 @@ export const translations = {
         { label: "Gallery", href: "#gallery" },
         { label: "Location", href: "#location" },
         { label: "Blog", href: "/blog" },
-        { label: "FAQ", href: "/faq" },
+        { label: "FAQ", href: "#faq" },
         { label: "Contact", href: "#contact" },
       ],
       cta: "Book Now",
@@ -82,6 +82,9 @@ export const translations = {
       close: "Close",
       prev: "Previous",
       next: "Next",
+      viewMore: "View full gallery",
+      pageTitle: "Photo Gallery",
+      pageSubtitle: "Explore every apartment, the sea views and the surroundings of Mlini.",
     },
     amenities: {
       eyebrow: "What we offer",
@@ -170,7 +173,7 @@ export const translations = {
     },
     contact: {
       eyebrow: "Contact",
-      h2: "Enquiry / Reservation",
+      h2: "Reservation",
       subtitle: "Send an enquiry and we'll get back to you with availability and a quote within a few hours.",
       nameLabel: "Full Name",
       emailLabel: "Email",
@@ -325,6 +328,9 @@ export const translations = {
       close: "Zatvori",
       prev: "Prethodna",
       next: "Sljedeća",
+      viewMore: "Pogledajte cijelu galeriju",
+      pageTitle: "Foto galerija",
+      pageSubtitle: "Istražite svaki apartman, poglede na more i okolicu Mlina.",
     },
     amenities: {
       eyebrow: "Što nudimo",
@@ -405,7 +411,7 @@ export const translations = {
     },
     contact: {
       eyebrow: "Kontakt",
-      h2: "Upit / Rezervacija",
+      h2: "Rezervacija",
       subtitle: "Pošaljite upit i javit ćemo Vam se s dostupnošću i ponudom u roku nekoliko sati.",
       nameLabel: "Ime i prezime",
       emailLabel: "Email",

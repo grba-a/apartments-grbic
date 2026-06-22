@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { useId } from "react";
+import Image from "next/image";
 import { useLang } from "@/src/i18n/LangContext";
 
 type Platform = "Google" | "Booking" | "Tripadvisor" | "Agoda";
@@ -10,25 +10,27 @@ type Review = {
   score: number;
   text: string;
   name: string;
-  location: string;
+  location?: string;
   platform: Platform;
-  date: string;
+  date?: string;
 };
 
+// Real aggregate ratings (verified June 2026: Booking.com, Agoda, Google).
 const platformStats = [
-  { name: "Booking.com", score: 8.7, outOf: 10, stars: 4.4, reviews: 132 },
-  { name: "Google",      score: 4.3, outOf: 5,  stars: 4.3, reviews: 27  },
-  { name: "Agoda",       score: 4.5, outOf: 5,  stars: 4.5, reviews: 131 },
+  { name: "Booking.com", platform: "Booking" as Platform, logo: { src: "/logos/booking-logo.png", w: 2000, h: 340 }, score: "8.7", scale: "/10", stars: 4.35, reviews: 144, href: "https://www.booking.com/hotel/hr/apartmani-grbia.hr.html" },
+  { name: "Agoda",       platform: "Agoda" as Platform,   logo: { src: "/logos/agoda-logo.png",   w: 934,  h: 478 }, score: "8.7", scale: "/10", stars: 4.35, reviews: 134, href: "https://www.agoda.com/apartments-grbic/hotel/mlini-hr.html" },
+  { name: "Google",      platform: "Google" as Platform,  logo: { src: "/logos/google-logo.png",  w: 1275, h: 424 }, score: "4.4", scale: "/5",  stars: 4.4,  reviews: 28,  href: "https://share.google/P6ZK6srMHdU72N4fk" },
 ];
 
+// Real, verified guest reviews — 3 each from Booking.com, Agoda and Google.
 const reviews: Review[] = [
   {
     score: 10,
     text: "This is a gem — excellent value for money. Super comfy bed and a beautiful view of the bay. Ana was super helpful, she even offered to drive us back to the airport when our taxi was delayed.",
     name: "Gwendoline",
-    location: "Francuska",
+    location: "France",
     platform: "Booking",
-    date: "Rujan 2023",
+    date: "September 2023",
   },
   {
     score: 10,
@@ -36,23 +38,7 @@ const reviews: Review[] = [
     name: "Francine",
     location: "UK",
     platform: "Booking",
-    date: "Svibanj 2024",
-  },
-  {
-    score: 10,
-    text: "How easy it is to get to Dubrovnik and Cavtat by water taxi. In my eyes this is a much better location than staying in Dubrovnik itself. Highly recommend.",
-    name: "Lewis",
-    location: "UK",
-    platform: "Booking",
-    date: "Kolovoz 2025",
-  },
-  {
-    score: 10,
-    text: "The apartment is excellent. Beautiful sea view, parking on the property, Ana is very friendly. We will definitely be back — there was no more availability to extend our stay!",
-    name: "Alana",
-    location: "Brazil",
-    platform: "Booking",
-    date: "Srpanj 2024",
+    date: "May 2024",
   },
   {
     score: 10,
@@ -60,15 +46,49 @@ const reviews: Review[] = [
     name: "Margaret",
     location: "UK",
     platform: "Booking",
-    date: "Kolovoz 2025",
+    date: "August 2025",
+  },
+  {
+    score: 8,
+    text: "Location — 3 minutes' walk to the beach front with lots of food options, and calm, away from the city hustle.",
+    name: "Deepak",
+    location: "India",
+    platform: "Agoda",
+    date: "June 2026",
   },
   {
     score: 9,
-    text: "It's challenging to climb the stairs, but for that you receive a breathtaking view and complete silence — something you simply won't find in apartments next to the promenade.",
-    name: "Elizaveta",
-    location: "Rusija",
-    platform: "Booking",
-    date: "Srpanj 2023",
+    text: "Friendly staff, comfortable beds, location is good. You're close to the road with car access, and a few steps down take you to the beach.",
+    name: "Stefan",
+    location: "Serbia",
+    platform: "Agoda",
+    date: "September 2024",
+  },
+  {
+    score: 10,
+    text: "Croatia is a beautiful place and this is a lovely place to stay while visiting. Clean, very comfortable, and great communication with the host.",
+    name: "Bethany",
+    location: "USA",
+    platform: "Agoda",
+    date: "July 2024",
+  },
+  {
+    score: 5,
+    text: "We had a beautiful stay, would like to go back there one day. Such a lovely and helpful owner, spacious room — they had even left some sun cream in the room. Definitely recommend!",
+    name: "Paula",
+    platform: "Google",
+  },
+  {
+    score: 5,
+    text: "Everything is on the level. The hosts are very friendly. Even the stairs to the beach are cute and good for fitness. A very nice experience.",
+    name: "Kristijan",
+    platform: "Google",
+  },
+  {
+    score: 5,
+    text: "Cleanliness, kindness, and attentiveness. I highly recommend it for a stay in Croatia — they welcomed us with a fruit platter and a latte. Very kind hosts.",
+    name: "Luigi",
+    platform: "Google",
   },
 ];
 
@@ -106,7 +126,7 @@ function StarRow({ score, outOf = 5, size = 15 }: { score: number; outOf?: numbe
 function PlatformBadge({ platform }: { platform: Platform }) {
   return (
     <span
-      className="rounded-full px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white"
+      className="w-fit rounded-full px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white"
       style={{ backgroundColor: platformColors[platform], fontFamily: "var(--font-montserrat), sans-serif" }}
     >
       {platform}
@@ -125,34 +145,37 @@ function Initials({ name }: { name: string }) {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function ReviewCard({ r, t }: { r: Review; t: any }) {
+function ReviewCard({ r, t }: { r: Review; t: ReturnType<typeof useLang>["t"] }) {
+  const date = r.date ? (t.reviews.dates[r.date] ?? r.date) : null;
+  const location = r.location ? (t.reviews.locations[r.location] ?? r.location) : null;
   return (
-    <div className="relative flex flex-col overflow-hidden rounded-2xl bg-white p-7 shadow-md h-full">
+    <div className="relative flex h-[224px] flex-col overflow-hidden rounded-2xl bg-white p-6 shadow-md">
       <span
         className="pointer-events-none absolute -top-1 left-5 select-none text-[72px] leading-none"
         style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-gold)", opacity: 0.12 }}
         aria-hidden="true"
-      >"</span>
+      >&ldquo;</span>
 
-      <div className="relative mb-4 flex items-center justify-between">
-        <StarRow score={r.score} size={15} />
-        <span
-          className="text-[12px] font-medium"
-          style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
-        >
-          {t.reviews.dates[r.date] ?? r.date}
-        </span>
+      <div className="relative mb-3 flex items-center justify-between">
+        <StarRow score={r.score} outOf={r.platform === "Google" ? 5 : 10} size={15} />
+        {date && (
+          <span
+            className="text-[12px] font-medium"
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+          >
+            {date}
+          </span>
+        )}
       </div>
 
       <p
-        className="relative flex-1 text-[14px] leading-[1.75] italic"
+        className="relative line-clamp-4 text-[14px] leading-[1.7] italic"
         style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
       >
-        "{r.text}"
+        &ldquo;{r.text}&rdquo;
       </p>
 
-      <div className="mt-5 flex items-center gap-3 border-t pt-4" style={{ borderColor: "#F3F4F6" }}>
+      <div className="mt-auto flex items-center gap-3 border-t pt-4" style={{ borderColor: "#F3F4F6" }}>
         <Initials name={r.name} />
         <div className="flex flex-1 flex-col gap-1.5">
           <div className="flex items-center gap-2">
@@ -162,12 +185,14 @@ function ReviewCard({ r, t }: { r: Review; t: any }) {
             >
               {r.name}
             </span>
-            <span
-              className="text-[11px]"
-              style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
-            >
-              · {t.reviews.locations[r.location] ?? r.location}
-            </span>
+            {location && (
+              <span
+                className="text-[11px]"
+                style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+              >
+                · {location}
+              </span>
+            )}
           </div>
           <PlatformBadge platform={r.platform} />
         </div>
@@ -176,16 +201,96 @@ function ReviewCard({ r, t }: { r: Review; t: any }) {
   );
 }
 
+function PlatformCard({ p, t, className = "" }: { p: (typeof platformStats)[number]; t: ReturnType<typeof useLang>["t"]; className?: string }) {
+  return (
+    <a
+      href={p.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`flex flex-col items-center justify-center gap-2 rounded-2xl bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md md:p-5 ${className}`}
+    >
+      {/* Fixed bounding box keeps all logos to the same visual footprint (no overflow) */}
+      <span className="relative block h-6 w-[96px] md:h-7 md:w-[104px]">
+        <Image
+          src={p.logo.src}
+          alt={p.name}
+          fill
+          sizes="110px"
+          className="object-contain"
+        />
+      </span>
+      <span
+        className="flex items-baseline leading-none"
+        style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
+      >
+        <span className="text-[34px] font-normal md:text-[40px]">{p.score}</span>
+        <span className="ml-0.5 text-[14px] text-[var(--color-text-muted)] md:text-[15px]">{p.scale}</span>
+      </span>
+      <StarRow score={p.stars} outOf={5} size={14} />
+      <span
+        className="text-[10px]"
+        style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+      >
+        {p.reviews} {t.reviews.reviewsLabel}
+      </span>
+    </a>
+  );
+}
+
+function ReviewRow({
+  items,
+  t,
+  reverse,
+}: {
+  items: Review[];
+  t: ReturnType<typeof useLang>["t"];
+  reverse: boolean;
+}) {
+  const loop = [...items, ...items];
+  return (
+    <div className="relative overflow-hidden">
+      {/* Edge fades */}
+      <div
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10"
+        style={{ background: "linear-gradient(to right, var(--color-navy), transparent)" }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10"
+        style={{ background: "linear-gradient(to left, var(--color-navy), transparent)" }}
+        aria-hidden="true"
+      />
+      <div className={`reviews-marquee items-stretch py-1${reverse ? " reverse" : ""}`}>
+        {loop.map((r, i) => (
+          <div
+            key={`${r.platform}-${r.name}-${i}`}
+            className={`w-[300px] shrink-0 pr-5${i >= items.length ? " reviews-marquee-dup" : ""}`}
+            aria-hidden={i >= items.length}
+          >
+            <ReviewCard r={r} t={t} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Reviews() {
   const { t } = useLang();
-  const [current, setCurrent] = useState(0);
-
-  // Distance between card centers in the 3D scene
-  const OFFSET = 308;
+  // One infinite-loop row per platform category.
+  const reviewRows = (["Booking", "Agoda", "Google"] as Platform[])
+    .map((platform) => ({ platform, items: reviews.filter((r) => r.platform === platform) }))
+    .filter((row) => row.items.length > 0);
 
   return (
-    <section id="reviews" className="py-24" style={{ backgroundColor: "var(--color-sand)" }}>
-      <div className="mx-auto max-w-[1240px] px-6">
+    <section id="reviews" className="relative overflow-hidden py-24" style={{ backgroundColor: "var(--color-navy)" }}>
+      {/* Subtle gold glow anchoring the section */}
+      <div
+        className="pointer-events-none absolute -top-40 left-1/2 h-[420px] w-[720px] -translate-x-1/2 rounded-full"
+        style={{ background: "radial-gradient(ellipse, rgba(201,168,76,0.16), transparent 70%)" }}
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-[1240px] px-6">
 
         {/* Header */}
         <div className="reveal flex flex-col items-center text-center">
@@ -197,136 +302,65 @@ export default function Reviews() {
           </span>
           <span className="section-rule" />
           <h2
-            className="mb-4 text-4xl font-normal leading-tight md:text-[48px]"
-            style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
+            className="mb-4 text-4xl font-normal leading-tight text-white md:text-[48px]"
+            style={{ fontFamily: "var(--font-playfair), serif" }}
           >
             {t.reviews.h2}
           </h2>
           <p
-            className="max-w-[480px] text-[15px] leading-relaxed"
-            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
+            className="max-w-[480px] text-[15px] leading-relaxed text-white/65"
+            style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
           >
             {t.reviews.subtitle}
           </p>
         </div>
 
-        {/* Platform stats */}
-        <div className="reveal reveal-delay-1 mt-14 mb-16 grid grid-cols-3 gap-4 md:gap-8 max-w-[680px] mx-auto">
-          {platformStats.map((p) => (
-            <div key={p.name} className="flex flex-col items-center gap-2 rounded-2xl bg-white p-5 shadow-sm">
-              <span
-                className="text-[10px] uppercase tracking-[0.15em] text-center"
-                style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
-              >
-                {p.name}
-              </span>
-              <span
-                className="text-[40px] font-normal leading-none"
-                style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-navy)" }}
-              >
-                {p.score}
-              </span>
-              <StarRow score={p.stars} outOf={5} size={14} />
-              <span
-                className="text-[10px]"
-                style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}
-              >
-                {p.reviews} {t.reviews.reviewsLabel}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* ── Tablet: simple 2-col grid (md only) ──────────────────────────── */}
-        <div className="hidden md:grid lg:hidden grid-cols-2 gap-5">
-          {reviews.map((r) => (
-            <ReviewCard key={r.name} r={r} t={t} />
-          ))}
-        </div>
-
-        {/* ── Desktop: 3D coverflow carousel (lg+) ─────────────────────────── */}
-        <div className="hidden lg:block">
-          {/* Stage */}
-          <div className="relative mx-auto" style={{ height: "370px" }}>
-            {reviews.map((r, idx) => {
-              const rel = idx - current;
-              const abs = Math.abs(rel);
-              if (abs > 2) return null;
-
-              const isSide = abs === 1;
-              const isFar  = abs === 2;
-
-              return (
-                <div
-                  key={r.name}
-                  onClick={() => isSide && setCurrent(idx)}
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: "50%",
-                    width: "380px",
-                    height: "360px",
-                    transform: `perspective(1100px) translateX(calc(-50% + ${rel * OFFSET}px)) scale(${abs === 0 ? 1 : 0.78}) rotateY(${-rel * 20}deg)`,
-                    opacity: abs === 0 ? 1 : abs === 1 ? 0.68 : 0,
-                    zIndex: 10 - abs * 3,
-                    transition: "transform 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease",
-                    willChange: "transform, opacity",
-                    cursor: isSide ? "pointer" : "default",
-                    transformOrigin: rel < 0 ? "right center" : rel > 0 ? "left center" : "center center",
-                  }}
-                >
-                  {/* Hover glow on side cards */}
-                  {isSide && (
-                    <div
-                      className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 hover:opacity-100 z-10 pointer-events-none"
-                      style={{ boxShadow: "inset 0 0 0 2px var(--color-gold)" }}
-                    />
-                  )}
-                  {/* Dim overlay on far cards */}
-                  {isFar && (
-                    <div className="absolute inset-0 rounded-2xl z-10 pointer-events-none" style={{ background: "rgba(0,0,0,0.15)" }} />
-                  )}
-                  <ReviewCard r={r} t={t} />
-                </div>
-              );
-            })}
+        {/* ── Mobile (<md): stat cards + one infinite-loop row per category ── */}
+        <div className="md:hidden">
+          <div className="reveal reveal-delay-1 mx-auto mt-14 mb-10 grid max-w-[680px] grid-cols-3 gap-4">
+            {platformStats.map((p) => (
+              <PlatformCard key={p.name} p={p} t={t} />
+            ))}
           </div>
-
-          {/* Dots */}
-          <div className="mt-8 flex items-center justify-center gap-3">
-            {reviews.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                aria-label={`Review ${i + 1}`}
-                className="h-2 rounded-full transition-all duration-300 cursor-pointer"
-                style={{
-                  width: i === current ? "28px" : "8px",
-                  backgroundColor: i === current ? "var(--color-gold)" : "#CBD5E1",
-                }}
-              />
+          <div className="reveal flex flex-col gap-4">
+            {reviewRows.map((row, idx) => (
+              <ReviewRow key={row.platform} items={row.items} t={t} reverse={idx % 2 === 1} />
             ))}
           </div>
         </div>
 
-        {/* ── Mobile: horizontal snap carousel (<md) ────────────────────────── */}
-        <div
-          className="no-scrollbar -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 md:hidden"
-          style={{ WebkitOverflowScrolling: "touch" }}
-        >
-          {reviews.map((r) => (
-            <div
-              key={r.name}
-              className="w-[86%] shrink-0 snap-center"
-            >
-              <ReviewCard r={r} t={t} />
-            </div>
-          ))}
+        {/* ── Desktop (md+): each category card in line with its own infinite-loop row ── */}
+        <style>{`
+          @keyframes reviewsMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+          .reviews-marquee { display: flex; width: max-content; animation: reviewsMarquee 44s linear infinite; will-change: transform; }
+          .reviews-marquee.reverse { animation-direction: reverse; }
+          .reviews-marquee:hover { animation-play-state: paused; }
+          @media (prefers-reduced-motion: reduce) {
+            .reviews-marquee { animation: none; width: 100%; overflow-x: auto; }
+            .reviews-marquee-dup { display: none; }
+          }
+        `}</style>
+        <div className="reveal reveal-delay-2 mt-14 hidden flex-col gap-5 md:flex">
+          {reviewRows.map((row, idx) => {
+            const p = platformStats.find((ps) => ps.platform === row.platform)!;
+            return (
+              <div key={row.platform} className="flex items-stretch gap-6">
+                {/* Left — category card, height matches its row */}
+                <div className="w-[176px] shrink-0 lg:w-[196px]">
+                  <PlatformCard p={p} t={t} className="h-full w-full" />
+                </div>
+                {/* Right — infinite-loop row of that category's reviews */}
+                <div className="min-w-0 flex-1">
+                  <ReviewRow items={row.items} t={t} reverse={idx % 2 === 1} />
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-2 text-[14px]">
-          <span style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-text-muted)" }}>
+        <div className="relative mt-12 flex flex-wrap items-center justify-center gap-2 text-[14px]">
+          <span className="text-white/60" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
             {t.reviews.readAllOn}
           </span>
           <a
@@ -338,7 +372,17 @@ export default function Reviews() {
           >
             Booking.com
           </a>
-          <span style={{ color: "var(--color-text-muted)" }}>{t.reviews.and}</span>
+          <span className="text-white/40">·</span>
+          <a
+            href="https://www.agoda.com/apartments-grbic/hotel/mlini-hr.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium transition-colors duration-200 hover:underline"
+            style={{ fontFamily: "var(--font-montserrat), sans-serif", color: "var(--color-gold)" }}
+          >
+            Agoda
+          </a>
+          <span className="text-white/40">{t.reviews.and}</span>
           <a
             href="https://share.google/P6ZK6srMHdU72N4fk"
             target="_blank"

@@ -47,48 +47,67 @@ const items = [
   { icon: <DirectIcon />,  value: null, label: "Book Direct",  href: null },
 ];
 
+function TrustItem({ item }: { item: (typeof items)[number] }) {
+  const inner = (
+    <div className="flex items-center gap-1.5 px-5 py-3 md:px-7 md:py-3.5">
+      {item.icon && <span style={{ color: "var(--color-gold)" }}>{item.icon}</span>}
+      {item.value && (
+        <span
+          className="text-[12px] font-medium text-white md:text-[13px]"
+          style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+        >
+          {item.value}
+        </span>
+      )}
+      <span
+        className="text-[10px] uppercase tracking-[0.12em] text-white/50 md:text-[11px]"
+        style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
+      >
+        {item.label}
+      </span>
+    </div>
+  );
+
+  return item.href ? (
+    <a
+      href={item.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="shrink-0 border-l border-white/10 transition-colors duration-200 hover:bg-white/5"
+    >
+      {inner}
+    </a>
+  ) : (
+    <div className="shrink-0 border-l border-white/10">{inner}</div>
+  );
+}
+
 export default function TrustStrip() {
   return (
-    <div style={{ backgroundColor: "var(--color-navy)" }} className="border-b border-white/5">
-      <div className="mx-auto max-w-[1240px] overflow-x-auto">
-        <div className="flex min-w-max items-center justify-center gap-0 divide-x divide-white/10 px-6 md:min-w-0 md:flex-wrap">
-          {items.map((item, i) => {
-            const inner = (
-              <div className="flex items-center gap-1.5 px-4 py-3.5 md:px-6">
-                {item.icon && (
-                  <span style={{ color: "var(--color-gold)" }}>{item.icon}</span>
-                )}
-                {item.value && (
-                  <span
-                    className="text-[13px] font-medium text-white"
-                    style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
-                  >
-                    {item.value}
-                  </span>
-                )}
-                <span
-                  className="text-[11px] uppercase tracking-[0.12em] text-white/50"
-                  style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
-                >
-                  {item.label}
-                </span>
-              </div>
-            );
-
-            return item.href ? (
-              <a
-                key={i}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors duration-200 hover:bg-white/5"
-              >
-                {inner}
-              </a>
-            ) : (
-              <div key={i}>{inner}</div>
-            );
-          })}
+    <div
+      style={{ backgroundColor: "var(--color-navy)" }}
+      className="hidden border-b border-white/5 md:block"
+    >
+      {/* Edge fade masks for a clean marquee entry/exit */}
+      <div className="group relative overflow-hidden">
+        <div
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 md:w-20"
+          style={{ background: "linear-gradient(to right, var(--color-navy), transparent)" }}
+        />
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 md:w-20"
+          style={{ background: "linear-gradient(to left, var(--color-navy), transparent)" }}
+        />
+        <div className="trust-marquee">
+          {items.map((item, i) => (
+            <TrustItem key={`a-${i}`} item={item} />
+          ))}
+          {/* Duplicate set for a seamless -50% loop; hidden under reduced-motion */}
+          <div className="trust-marquee-dup flex flex-nowrap" aria-hidden="true">
+            {items.map((item, i) => (
+              <TrustItem key={`b-${i}`} item={item} />
+            ))}
+          </div>
         </div>
       </div>
     </div>

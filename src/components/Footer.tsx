@@ -62,7 +62,7 @@ const navLinks = [
   { label: "Gallery",    href: "#gallery" },
   { label: "Location",   href: "#location" },
   { label: "Blog",       href: "/blog" },
-  { label: "FAQ",        href: "/faq" },
+  { label: "FAQ",        href: "#faq" },
   { label: "Contact",    href: "#contact" },
 ];
 
@@ -131,7 +131,7 @@ export default function Footer() {
               </p>
               <div className="mt-6 flex gap-4">
                 {[
-                  { label: "Booking 8.8 ⭐", href: "https://www.booking.com/hotel/hr/apartmani-grbia.hr.html" },
+                  { label: "Booking 8.7 ⭐", href: "https://www.booking.com/hotel/hr/apartmani-grbia.hr.html" },
                   { label: "Google 4.3 ⭐", href: "https://share.google/P6ZK6srMHdU72N4fk" },
                 ].map((r) => (
                   <a
